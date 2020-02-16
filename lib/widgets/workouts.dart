@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'add_workout.dart';
 import 'workout.dart';
@@ -71,7 +72,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
           ),
         ),
         title: Text(w.title),
-        subtitle: Text("${w.date.day}.${w.date.month}.${w.date.year}"),
+        subtitle: Text("${DateFormat.yMd().format(w.date)}"),
       )
     );
   }
