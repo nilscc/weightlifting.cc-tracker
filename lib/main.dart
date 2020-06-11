@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'pages/workouts.dart';
+import 'package:weightlifting.cc/pages/home.dart';
+
 
 void main() async {
 
@@ -24,7 +25,10 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WorkoutsPage(title: 'weightlifting.cc'),
+      supportedLocales: [
+        Locale("de"),
+      ],
+      home: HomePage(),
     );
   }
 

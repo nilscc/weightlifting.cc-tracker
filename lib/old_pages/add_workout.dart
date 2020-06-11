@@ -2,10 +2,10 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:weightlifting.cc/json/workout.dart' as JSON;
-import 'package:weightlifting.cc/pages/exercise_selector.dart' as SELECTOR;
-import 'package:weightlifting.cc/widgets/date_selector.dart';
-import 'package:weightlifting.cc/widgets/exercise_tile.dart';
-import 'package:weightlifting.cc/widgets/new_exercises.dart';
+import 'package:weightlifting.cc/old_pages/exercise_selector.dart' as SELECTOR;
+import 'package:weightlifting.cc/old_widgets/date_selector.dart';
+import 'package:weightlifting.cc/old_widgets/exercise_tile.dart';
+import 'package:weightlifting.cc/old_widgets/new_exercises.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutState extends ChangeNotifier {
@@ -82,7 +82,8 @@ class AddWorkoutPage extends StatelessWidget {
       return Card(child: Text('No exercises yet.'));
     else
       return Column(
-        children: exercises.asMap().keys.map((idx) => ExerciseTile(idx)).toList(),
+        children:
+            exercises.asMap().keys.map((idx) => ExerciseTile(idx)).toList(),
       );
   }
 

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:weightlifting.cc/widgets/new_exercise.dart';
+import 'package:weightlifting.cc/old_widgets/new_exercise.dart';
 import 'package:provider/provider.dart';
 
 class NewExercises extends ChangeNotifier {
