@@ -47,6 +47,6 @@ Set _$SetFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$SetToJson(Set instance) => <String, dynamic>{
-      'weight_kg': instance.weight_kg,
+      'weight_kg': instance.weightKg,
       'repetitions': instance.repetitions,
     };

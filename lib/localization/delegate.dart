@@ -24,8 +24,10 @@ class Loc {
 
   static const _Del delegate = _Del();
 
+  final DialogMessages dialog = DialogMessages();
   final HomeMessages home = HomeMessages();
   final WorkoutMessages workout = WorkoutMessages();
+  final ExerciseMessages exercise = ExerciseMessages();
 
 }
 

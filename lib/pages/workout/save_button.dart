@@ -6,21 +6,25 @@ import 'package:weightlifting.cc/pages/workout/exercises.dart';
 import 'package:weightlifting.cc/pages/workout/workout_details.dart';
 
 class SaveButton extends StatelessWidget {
-
   final BuildContext context;
 
   SaveButton(this.context);
 
   // Change notifier getters
-  WorkoutDetails get details => Provider.of<WorkoutDetails>(context, listen: false);
-  Exercises get exercises => Provider.of<Exercises>(context, listen: false);
-
+  WorkoutDetails get details =>
+      Provider.of<WorkoutDetails>(context, listen: false);
+  ExercisesState get exercises =>
+      Provider.of<ExercisesState>(context, listen: false);
 
   bool get _isModified => details.isModified || exercises.isModified;
 
   void _save() {
     print('SAVE - Details: [${details.dateTime}] "${details.title}"');
     print('     - Exercises: ${exercises.count}');
+
+    // TODO: convert change notifier states into JSON and store on local storage
+
+    exercises.unsetIsModified();
   }
 
   @override

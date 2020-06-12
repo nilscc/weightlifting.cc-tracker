@@ -1,12 +1,57 @@
 {
   "@@locale": "de",
 
+  "DIALOG_DISCARD_TITLE": "Änderungen verwerfen?",
+  "DIALOG_DISCARD_CONTENT": "Nicht gespeicherte Änderungen gehen verloren.",
+  "DIALOG_DISCARD_BUTTON_DISCARD": "Verwerfen",
+  "DIALOG_DISCARD_BUTTON_BACK": "Zurück",
+
   "HOME_NO_WORKOUTS": "Keine Workouts gespeichert.",
   "HOME_UNREGISTERED_TITLE": "Account nicht registriert.",
   "HOME_UNREGISTERED_SUBTITLE": "Bitte registriere deinen Account mit einer Emailadresse um Workouts langfristig zu sichern.",
 
-  "WORKOUT_POP_DIALOG_DISCARD_TITLE": "Änderungen verwerfen?",
-  "WORKOUT_POP_DIALOG_DISCARD_CONTENT": "Nicht gespeicherte Änderungen gehen verloren.",
-  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD": "Verwerfen",
-  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK": "Zurück"
+  "WORKOUT_SELECT_EXERCISE": "Übung auswählen...",
+
+  "EXERCISE_CATEGORY_K1_COMPETITION": "K1 - Wettkampfübungen",
+  "EXERCISE_01_SNATCH": "Reißen",
+  "EXERCISE_02_SNATCH_WITH_STRAPS": "Reißen (Bänder)",
+  "EXERCISE_03_CLEAN_AND_JERK": "Stoßen",
+  "EXERCISE_04_CLEAN": "Umsetzen",
+  "EXERCISE_05_JERK": "Ausstoßen",
+
+  "EXERCISE_CATEGORY_K2_PARTIAL": "K2 - Teilübungen",
+  "EXERCISE_06_SNATCH_HANG": "Reißen (erhöht)",
+  "EXERCISE_07_SNATCH_POWER": "Standreißen",
+  "EXERCISE_08_SNATCH_HANG_HIGH": "Umgruppieren (breit)",
+  "EXERCISE_09_CLEAN_HANG": "Umsetzen (erhöht)",
+  "EXERCISE_10_CLEAN_POWER": "Standumsetzen",
+  "EXERCISE_11_CLEAN_HANG_HIGH": "Umgruppieren (eng)",
+  "EXERCISE_12_JERK_POWER": "Standstoßen",
+
+  "EXERCISE_CATEGORY_K3_PULLS": "K3 - Züge",
+  "EXERCISE_13_SNATCH_PULL": "Zug (breit)",
+  "EXERCISE_14_CLEAN_PULL": "Zug (eng)",
+
+  "EXERCISE_CATEGORY_K4": "K4 - Lastheben",
+  "EXERCISE_15_SNATCH_DEADLIFT": "Lastheben (breit)",
+  "EXERCISE_16_CLEAN_DEADLIFT": "Lastheben (eng)",
+  "EXERCISE_17_JERK_SQUAT": "Anstoßkniebeuge",
+
+  "EXERCISE_CATEGORY_K5_SQUATS": "K5 - Kniebeugen",
+  "EXERCISE_18_SQUAT_OVERHEAD": "Reißkniebeuge",
+  "EXERCISE_19_SQUAT_FRONT": "Kniebeuge (vorn)",
+  "EXERCISE_20_SQUAT_BACK": "Kniebeuge (hinten)",
+  "EXERCISE_21_SQUAT_QUARTER": "Halbkniebeuge",
+
+  "EXERCISE_CATEGORY_K6_POWER": "K6 - Schnellkraft",
+  "EXERCISE_22_SNATCH_PULL_POWER": "Powerzug (breit)",
+  "EXERCISE_23_SNATCH_MUSCLE": "Kraftreißen",
+  "EXERCISE_24_CLEAN_PULL_POWER": "Powerzug (eng)",
+  "EXERCISE_25_PRESS": "Kraftdrücken",
+  "EXERCISE_26_PRESS_PUSH": "Schwungdrücken",
+
+  "EXERCISE_CATEGORY_K7_COMPLEX": "K7 - Kombinationsübungen",
+  "EXERCISE_27_CLEAN_FRONTSQUAT": "Umsetzen & Kniebeuge (vorn)",
+  "EXERCISE_28_POWERCLEAN_POWERJERK": "Standumsetzen & Standstoßen",
+  "EXERCISE_29_FRONTSQUAT_JERK": "Kniebeuge (vorn) & Ausstoßen"
 }

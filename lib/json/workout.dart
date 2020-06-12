@@ -39,12 +39,12 @@ class Exercise {
 
 @JsonSerializable()
 class Set {
-  Set(this.weight_kg, this.repetitions);
+  Set(this.weightKg, this.repetitions);
 
-  final double weight_kg;
+  final double weightKg;
   final int repetitions;
 
-  double weight_lbs() => weight_kg * 2.20462262485;
+  double weightLbs() => weightKg * 2.20462262485;
 
   // Serialization methods
   factory Set.fromJson(Map<String, dynamic> json) => _$SetFromJson(json);

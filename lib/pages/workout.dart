@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 
 import 'package:weightlifting.cc/pages/workout/exercises.dart';
@@ -15,11 +14,12 @@ class WorkoutPage extends StatelessWidget {
 
   // Change notifiers
   final WorkoutDetails _details = WorkoutDetails();
-  final Exercises _exercises = Exercises();
+  final ExercisesState _exercises = ExercisesState();
 
   WorkoutPage(this.context, {this.locked: true});
 
   // localization
+  DialogMessages get _dia => DialogMessages.of(context);
   WorkoutMessages get loc => WorkoutMessages.of(context);
 
   @override
@@ -27,18 +27,6 @@ class WorkoutPage extends StatelessWidget {
         appBar: _appBar(context),
         body: _body(context),
       );
-
-  void _save(BuildContext context) {
-    // should only be called when workout is not locked anyway
-    assert(!locked);
-
-    if (_details.dateTime != null && _details.title != null)
-      print(
-          'Save: [${_details.dateTime.toIso8601String()}] "${_details.title}"');
-    else
-      print(
-          'Invalid workout: Missing date (${_details.dateTime}) and/or title (${_details.title})');
-  }
 
   /*
    * Application Bar
@@ -70,27 +58,11 @@ class WorkoutPage extends StatelessWidget {
    *
    */
 
-  bool get _isModified => true; //_details.isModified || _exercises.isModified;
+  bool get _isModified => _details.isModified || _exercises.isModified;
 
   Future<bool> _canPop(BuildContext context) async {
     if (_isModified)
-      return await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(loc.popDialogDiscardTitle),
-          content: Text(loc.popDialogDiscardContent),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(loc.popDialogDiscardButtonDiscard),
-              onPressed: () => Navigator.pop(context, true),
-            ),
-            RaisedButton(
-              child: Text(loc.popDialogDiscardButtonBack),
-              onPressed: () => Navigator.pop(context, false),
-            ),
-          ],
-        ),
-      );
+      return await _dia.showDiscardDialog(context);
     else
       return true;
   }
@@ -109,7 +81,7 @@ class WorkoutPage extends StatelessWidget {
           Card(
             child: ChangeNotifierProvider.value(
               value: _exercises,
-              child: ExercisesWidget(),
+              builder: (BuildContext context, _) => ExercisesWidget(context),
             ),
           ),
         ],

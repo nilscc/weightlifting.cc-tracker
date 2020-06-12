@@ -1,5 +1,25 @@
 {
-  "@@last_modified": "2020-06-12T18:10:43.977201",
+  "@@last_modified": "2020-06-13T00:33:37.509970",
+  "DIALOG_DISCARD_TITLE": "DIALOG_DISCARD_TITLE",
+  "@DIALOG_DISCARD_TITLE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "DIALOG_DISCARD_CONTENT": "DIALOG_DISCARD_CONTENT",
+  "@DIALOG_DISCARD_CONTENT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "DIALOG_DISCARD_BUTTON_DISCARD": "DIALOG_DISCARD_BUTTON_DISCARD",
+  "@DIALOG_DISCARD_BUTTON_DISCARD": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "DIALOG_DISCARD_BUTTON_BACK": "DIALOG_DISCARD_BUTTON_BACK",
+  "@DIALOG_DISCARD_BUTTON_BACK": {
+    "type": "text",
+    "placeholders": {}
+  },
   "HOME_NO_WORKOUTS": "HOME_NO_WORKOUTS",
   "@HOME_NO_WORKOUTS": {
     "description": "Message displayed when no workouts have been added yet.",
@@ -16,23 +36,188 @@
     "type": "text",
     "placeholders": {}
   },
-  "WORKOUT_POP_DIALOG_DISCARD_TITLE": "WORKOUT_POP_DIALOG_DISCARD_TITLE",
-  "@WORKOUT_POP_DIALOG_DISCARD_TITLE": {
+  "WORKOUT_SELECT_EXERCISE": "WORKOUT_SELECT_EXERCISE",
+  "@WORKOUT_SELECT_EXERCISE": {
     "type": "text",
     "placeholders": {}
   },
-  "WORKOUT_POP_DIALOG_DISCARD_CONTENT": "WORKOUT_POP_DIALOG_DISCARD_CONTENT",
-  "@WORKOUT_POP_DIALOG_DISCARD_CONTENT": {
+  "EXERCISE_CATEGORY_K1_COMPETITION": "EXERCISE_CATEGORY_K1_COMPETITION",
+  "@EXERCISE_CATEGORY_K1_COMPETITION": {
     "type": "text",
     "placeholders": {}
   },
-  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD": "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD",
-  "@WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD": {
+  "EXERCISE_01_SNATCH": "EXERCISE_01_SNATCH",
+  "@EXERCISE_01_SNATCH": {
     "type": "text",
     "placeholders": {}
   },
-  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK": "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK",
-  "@WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK": {
+  "EXERCISE_02_SNATCH_WITH_STRAPS": "EXERCISE_02_SNATCH_WITH_STRAPS",
+  "@EXERCISE_02_SNATCH_WITH_STRAPS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_03_CLEAN_AND_JERK": "EXERCISE_03_CLEAN_AND_JERK",
+  "@EXERCISE_03_CLEAN_AND_JERK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_04_CLEAN": "EXERCISE_04_CLEAN",
+  "@EXERCISE_04_CLEAN": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_05_JERK": "EXERCISE_05_JERK",
+  "@EXERCISE_05_JERK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_CATEGORY_K2_PARTIAL": "EXERCISE_CATEGORY_K2_PARTIAL",
+  "@EXERCISE_CATEGORY_K2_PARTIAL": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_06_SNATCH_HANG": "EXERCISE_06_SNATCH_HANG",
+  "@EXERCISE_06_SNATCH_HANG": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_07_SNATCH_POWER": "EXERCISE_07_SNATCH_POWER",
+  "@EXERCISE_07_SNATCH_POWER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_08_SNATCH_HANG_HIGH": "EXERCISE_08_SNATCH_HANG_HIGH",
+  "@EXERCISE_08_SNATCH_HANG_HIGH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_09_CLEAN_HANG": "EXERCISE_09_CLEAN_HANG",
+  "@EXERCISE_09_CLEAN_HANG": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_10_CLEAN_POWER": "EXERCISE_10_CLEAN_POWER",
+  "@EXERCISE_10_CLEAN_POWER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_11_CLEAN_HANG_HIGH": "EXERCISE_11_CLEAN_HANG_HIGH",
+  "@EXERCISE_11_CLEAN_HANG_HIGH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_12_JERK_POWER": "EXERCISE_12_JERK_POWER",
+  "@EXERCISE_12_JERK_POWER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_CATEGORY_K3_PULLS": "EXERCISE_CATEGORY_K3_PULLS",
+  "@EXERCISE_CATEGORY_K3_PULLS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_13_SNATCH_PULL": "EXERCISE_13_SNATCH_PULL",
+  "@EXERCISE_13_SNATCH_PULL": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_14_CLEAN_PULL": "EXERCISE_14_CLEAN_PULL",
+  "@EXERCISE_14_CLEAN_PULL": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_CATEGORY_K4": "EXERCISE_CATEGORY_K4",
+  "@EXERCISE_CATEGORY_K4": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_15_SNATCH_DEADLIFT": "EXERCISE_15_SNATCH_DEADLIFT",
+  "@EXERCISE_15_SNATCH_DEADLIFT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_16_CLEAN_DEADLIFT": "EXERCISE_16_CLEAN_DEADLIFT",
+  "@EXERCISE_16_CLEAN_DEADLIFT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_17_JERK_SQUAT": "EXERCISE_17_JERK_SQUAT",
+  "@EXERCISE_17_JERK_SQUAT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_CATEGORY_K5_SQUATS": "EXERCISE_CATEGORY_K5_SQUATS",
+  "@EXERCISE_CATEGORY_K5_SQUATS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_18_SQUAT_OVERHEAD": "EXERCISE_18_SQUAT_OVERHEAD",
+  "@EXERCISE_18_SQUAT_OVERHEAD": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_19_SQUAT_FRONT": "EXERCISE_19_SQUAT_FRONT",
+  "@EXERCISE_19_SQUAT_FRONT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_20_SQUAT_BACK": "EXERCISE_20_SQUAT_BACK",
+  "@EXERCISE_20_SQUAT_BACK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_21_SQUAT_QUARTER": "EXERCISE_21_SQUAT_QUARTER",
+  "@EXERCISE_21_SQUAT_QUARTER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_CATEGORY_K6_POWER": "EXERCISE_CATEGORY_K6_POWER",
+  "@EXERCISE_CATEGORY_K6_POWER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_22_SNATCH_PULL_POWER": "EXERCISE_22_SNATCH_PULL_POWER",
+  "@EXERCISE_22_SNATCH_PULL_POWER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_23_SNATCH_MUSCLE": "EXERCISE_23_SNATCH_MUSCLE",
+  "@EXERCISE_23_SNATCH_MUSCLE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_24_CLEAN_PULL_POWER": "EXERCISE_24_CLEAN_PULL_POWER",
+  "@EXERCISE_24_CLEAN_PULL_POWER": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_25_PRESS": "EXERCISE_25_PRESS",
+  "@EXERCISE_25_PRESS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_26_PRESS_PUSH": "EXERCISE_26_PRESS_PUSH",
+  "@EXERCISE_26_PRESS_PUSH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_CATEGORY_K7_COMPLEX": "EXERCISE_CATEGORY_K7_COMPLEX",
+  "@EXERCISE_CATEGORY_K7_COMPLEX": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_27_CLEAN_FRONTSQUAT": "EXERCISE_27_CLEAN_FRONTSQUAT",
+  "@EXERCISE_27_CLEAN_FRONTSQUAT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_28_POWERCLEAN_POWERJERK": "EXERCISE_28_POWERCLEAN_POWERJERK",
+  "@EXERCISE_28_POWERCLEAN_POWERJERK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "EXERCISE_29_FRONTSQUAT_JERK": "EXERCISE_29_FRONTSQUAT_JERK",
+  "@EXERCISE_29_FRONTSQUAT_JERK": {
     "type": "text",
     "placeholders": {}
   }
