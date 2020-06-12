@@ -34,7 +34,7 @@ class _Del extends LocalizationsDelegate<Loc> {
   const _Del();
 
   @override
-  bool isSupported(ui.Locale locale) => ['en', 'de'].contains(locale.languageCode);
+  bool isSupported(ui.Locale locale) => ['de'].contains(locale.languageCode);
 
   @override
   Future<Loc> load(ui.Locale locale) => Loc.load(locale);
