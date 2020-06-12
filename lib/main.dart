@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:weightlifting.cc/localization.dart';
+
 import 'package:weightlifting.cc/pages/home.dart';
 
 
@@ -10,7 +12,6 @@ void main() async {
 
   // Set up time formatting with system locale
   Intl.defaultLocale = window.locale.toString();
-  await initializeDateFormatting(Intl.defaultLocale);
 
   // Run main app
   runApp(MainApp());
@@ -25,8 +26,15 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      supportedLocales: [
-        Locale("de"),
+      supportedLocales: const [
+        Locale('de', 'DE'),
+        //Locale('en', 'US'),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        DialogLocalizations.delegate,
       ],
       home: HomePage(),
     );

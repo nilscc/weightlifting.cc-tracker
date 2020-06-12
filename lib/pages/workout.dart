@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart';
+import 'package:weightlifting.cc/localization.dart';
 
 import 'package:weightlifting.cc/localization/de.dart';
 import 'package:weightlifting.cc/pages/workout/exercises.dart';
@@ -65,22 +66,25 @@ class WorkoutPage extends StatelessWidget {
    *
    */
 
-  bool get _isModified => _details.isModified || _exercises.isModified;
+  bool get _isModified => true; //_details.isModified || _exercises.isModified;
 
   Future<bool> _canPop(BuildContext context) async {
+
+    final loc = DialogLocalizations.of(context);
+
     if (_isModified)
       return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(DIALOG_DISCARD_TITLE),
-          content: Text(DIALOG_DISCARD_CONTENT),
+          title: Text(loc.discardTitle),
+          content: Text(loc.discardContent),
           actions: <Widget>[
             FlatButton(
-              child: Text(DIALOG_DISCARD_BUTTON_DISCARD),
+              child: Text(loc.discardButtonDiscard),
               onPressed: () => Navigator.pop(context, true),
             ),
             RaisedButton(
-              child: Text(DIALOG_DISCARD_BUTTON_BACK),
+              child: Text(loc.discardButtonBack),
               onPressed: () => Navigator.pop(context, false),
             ),
           ],
