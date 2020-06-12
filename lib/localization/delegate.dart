@@ -12,10 +12,8 @@ class Loc {
   Loc(this.localeName);
 
   static Future<Loc> load(ui.Locale locale) async {
-    print(locale);
     final String name = (locale.countryCode == null) ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
-    print(localeName);
     await initializeMessages(localeName);
     return Loc(localeName);
   }
