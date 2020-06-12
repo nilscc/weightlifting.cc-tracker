@@ -21,9 +21,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "Back" : MessageLookupByLibrary.simpleMessage("Zurück"),
-    "Discard" : MessageLookupByLibrary.simpleMessage("Verwerfen"),
-    "Discard changes?" : MessageLookupByLibrary.simpleMessage("Änderungen verwerfen?"),
-    "Unsaved changes will get lost." : MessageLookupByLibrary.simpleMessage("Nicht gespeicherte Änderungen gehen verloren.")
+    "HOME_NO_WORKOUTS" : MessageLookupByLibrary.simpleMessage("Keine Workouts gespeichert."),
+    "HOME_UNREGISTERED_SUBTITLE" : MessageLookupByLibrary.simpleMessage("Bitte registriere deinen Account mit einer Emailadresse um Workouts langfristig zu sichern."),
+    "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("Account nicht registriert."),
+    "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK" : MessageLookupByLibrary.simpleMessage("Zurück"),
+    "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD" : MessageLookupByLibrary.simpleMessage("Verwerfen"),
+    "WORKOUT_POP_DIALOG_DISCARD_CONTENT" : MessageLookupByLibrary.simpleMessage("Nicht gespeicherte Änderungen gehen verloren."),
+    "WORKOUT_POP_DIALOG_DISCARD_TITLE" : MessageLookupByLibrary.simpleMessage("Änderungen verwerfen?")
   };
 }

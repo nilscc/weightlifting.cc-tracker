@@ -35,11 +35,11 @@ class HomePage extends StatelessWidget {
         ],
       );
 
-  Widget _header(BuildContext context) => LoginHeader();
+  Widget _header(BuildContext context) => LoginHeader(context);
 
   Widget _workouts(BuildContext context) => ChangeNotifierProvider(
         create: (_) => new Workouts(),
-        child: WorkoutList(),
+        builder: (BuildContext context, _) => WorkoutList(context),
       );
 
   /*
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
   );
 
   Route<Workout> _newWorkoutRoute() => MaterialPageRoute(
-    builder: (BuildContext context) => WorkoutPage(locked: false),
+    builder: (BuildContext context) => WorkoutPage(context, locked: false),
   );
 
 }

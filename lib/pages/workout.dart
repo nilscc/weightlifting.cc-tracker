@@ -2,21 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart';
-import 'package:weightlifting.cc/localization.dart';
+import 'package:weightlifting.cc/localization/messages.dart';
 
-import 'package:weightlifting.cc/localization/de.dart';
 import 'package:weightlifting.cc/pages/workout/exercises.dart';
 import 'package:weightlifting.cc/pages/workout/save_button.dart';
 import 'package:weightlifting.cc/pages/workout/workout_details.dart';
 
 class WorkoutPage extends StatelessWidget {
+  final BuildContext context;
+
   final bool locked;
 
   // Change notifiers
   final WorkoutDetails _details = WorkoutDetails();
   final Exercises _exercises = Exercises();
 
-  WorkoutPage({this.locked: true});
+  WorkoutPage(this.context, {this.locked: true});
+
+  // localization
+  WorkoutMessages get loc => WorkoutMessages.of(context);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -69,22 +73,19 @@ class WorkoutPage extends StatelessWidget {
   bool get _isModified => true; //_details.isModified || _exercises.isModified;
 
   Future<bool> _canPop(BuildContext context) async {
-
-    final loc = DialogLocalizations.of(context);
-
     if (_isModified)
       return await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(loc.discardTitle),
-          content: Text(loc.discardContent),
+          title: Text(loc.popDialogDiscardTitle),
+          content: Text(loc.popDialogDiscardContent),
           actions: <Widget>[
             FlatButton(
-              child: Text(loc.discardButtonDiscard),
+              child: Text(loc.popDialogDiscardButtonDiscard),
               onPressed: () => Navigator.pop(context, true),
             ),
             RaisedButton(
-              child: Text(loc.discardButtonBack),
+              child: Text(loc.popDialogDiscardButtonBack),
               onPressed: () => Navigator.pop(context, false),
             ),
           ],

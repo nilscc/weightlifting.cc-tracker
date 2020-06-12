@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:weightlifting.cc/localization/messages.dart';
 
 class LoginHeader extends StatelessWidget {
+
+  final BuildContext context;
+
+  LoginHeader(this.context) : assert(context != null);
+
+  HomeMessages get loc => HomeMessages.of(context);
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -15,12 +23,11 @@ class LoginHeader extends StatelessWidget {
           color: color,
         ),
         title: Text(
-          'Unregistered Account',
+          loc.unregisteredTitle,
           style: TextStyle(color: color, fontWeight: FontWeight.bold),
         ),
         onTap: _openRegistration,
-        subtitle: Text(
-          'Tap to register with your email address. Otherwise your workouts may get lost!',
+        subtitle: Text(loc.unregisteredSubtitle,
           style: TextStyle(color: color),
         ),
       ),

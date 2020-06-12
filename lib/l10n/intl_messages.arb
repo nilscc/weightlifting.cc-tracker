@@ -1,3 +1,39 @@
 {
-  "@@last_modified": "2020-06-12T16:39:17.267027"
+  "@@last_modified": "2020-06-12T18:10:43.977201",
+  "HOME_NO_WORKOUTS": "HOME_NO_WORKOUTS",
+  "@HOME_NO_WORKOUTS": {
+    "description": "Message displayed when no workouts have been added yet.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "HOME_UNREGISTERED_TITLE": "HOME_UNREGISTERED_TITLE",
+  "@HOME_UNREGISTERED_TITLE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "HOME_UNREGISTERED_SUBTITLE": "HOME_UNREGISTERED_SUBTITLE",
+  "@HOME_UNREGISTERED_SUBTITLE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_POP_DIALOG_DISCARD_TITLE": "WORKOUT_POP_DIALOG_DISCARD_TITLE",
+  "@WORKOUT_POP_DIALOG_DISCARD_TITLE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_POP_DIALOG_DISCARD_CONTENT": "WORKOUT_POP_DIALOG_DISCARD_CONTENT",
+  "@WORKOUT_POP_DIALOG_DISCARD_CONTENT": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD": "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD",
+  "@WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK": "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK",
+  "@WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK": {
+    "type": "text",
+    "placeholders": {}
+  }
 }

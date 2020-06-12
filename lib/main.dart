@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:weightlifting.cc/localization.dart';
+import 'package:weightlifting.cc/localization/delegate.dart';
 
 import 'package:weightlifting.cc/pages/home.dart';
 
@@ -27,14 +27,13 @@ class MainApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       supportedLocales: const [
-        Locale('de', 'DE'),
-        //Locale('en', 'US'),
+        Locale('de'),
       ],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        DialogLocalizations.delegate,
+        Loc.delegate,
       ],
       home: HomePage(),
     );

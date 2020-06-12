@@ -1,24 +1,12 @@
 {
-  "@@last_modified": "2020-06-12T16:18:53.555725",
   "@@locale": "de",
-  "Discard changes?": "Änderungen verwerfen?",
-  "@Discard changes?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Unsaved changes will get lost.": "Nicht gespeicherte Änderungen gehen verloren.",
-  "@Unsaved changes will get lost.": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Discard": "Verwerfen",
-  "@Discard": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Back": "Zurück",
-  "@Back": {
-    "type": "text",
-    "placeholders": {}
-  }
+
+  "HOME_NO_WORKOUTS": "Keine Workouts gespeichert.",
+  "HOME_UNREGISTERED_TITLE": "Account nicht registriert.",
+  "HOME_UNREGISTERED_SUBTITLE": "Bitte registriere deinen Account mit einer Emailadresse um Workouts langfristig zu sichern.",
+
+  "WORKOUT_POP_DIALOG_DISCARD_TITLE": "Änderungen verwerfen?",
+  "WORKOUT_POP_DIALOG_DISCARD_CONTENT": "Nicht gespeicherte Änderungen gehen verloren.",
+  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD": "Verwerfen",
+  "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK": "Zurück"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/localization/messages.dart';
 
 class Workout {
   final String title;
@@ -21,17 +22,24 @@ class Workouts extends ChangeNotifier {
 }
 
 class WorkoutList extends StatelessWidget {
+
+  final BuildContext context;
+
+  WorkoutList(this.context) : assert(context != null);
+
+  HomeMessages get loc => HomeMessages.of(context);
+
+  Workouts get _state => Provider.of<Workouts>(context, listen: false);
+
   @override
   Widget build(BuildContext context) {
-    final Workouts w = Provider.of<Workouts>(context);
-
-    if (w.workouts.isEmpty)
+    if (_state.workouts.isEmpty)
       return ListTile(
-        title: Text('No workouts yet.'),
+        title: Text(loc.noWorkouts),
       );
     else
       return ListView(
-        children: w.workouts.map((w) => _workout(w)),
+        children: _state.workouts.map((w) => _workout(w)),
       );
   }
 

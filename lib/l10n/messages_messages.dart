@@ -21,6 +21,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-
+    "HOME_NO_WORKOUTS" : MessageLookupByLibrary.simpleMessage("HOME_NO_WORKOUTS"),
+    "HOME_UNREGISTERED_SUBTITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_SUBTITLE"),
+    "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_TITLE"),
+    "WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK" : MessageLookupByLibrary.simpleMessage("WORKOUT_POP_DIALOG_DISCARD_BUTTON_BACK"),
+    "WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD" : MessageLookupByLibrary.simpleMessage("WORKOUT_POP_DIALOG_DISCARD_BUTTON_DISCARD"),
+    "WORKOUT_POP_DIALOG_DISCARD_CONTENT" : MessageLookupByLibrary.simpleMessage("WORKOUT_POP_DIALOG_DISCARD_CONTENT"),
+    "WORKOUT_POP_DIALOG_DISCARD_TITLE" : MessageLookupByLibrary.simpleMessage("WORKOUT_POP_DIALOG_DISCARD_TITLE")
   };
 }
