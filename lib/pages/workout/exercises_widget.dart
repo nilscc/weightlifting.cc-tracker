@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
-import 'package:weightlifting.cc/pages/workout/exercise.dart';
+import 'package:weightlifting.cc/pages/workout/exercise_title_widget.dart';
+import 'package:weightlifting.cc/pages/workout/exercise_widget.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 import 'package:weightlifting.cc/state/workout_state.dart';
 
@@ -46,6 +47,6 @@ class ExercisesWidget extends StatelessWidget {
             child: ExerciseWidget(context),
           ),
         ),
-        isActive: WorkoutState.of(context).activeSet == index,
+        isActive: WorkoutState.of(context).activeExercise == index,
       );
 }

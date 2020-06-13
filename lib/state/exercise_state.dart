@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/state/set_state.dart';
 
 class ExerciseState extends ChangeNotifier {
 
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
   static ExerciseState of(BuildContext context) =>
       Provider.of<ExerciseState>(context, listen: false);
+
+  bool get isEmpty => !(hasExerciseId && hasSets);
 
   /*
    * Internal meta data, e.g. modified status
@@ -16,7 +19,6 @@ class ExerciseState extends ChangeNotifier {
   bool get isModified => _isModified;
   void unsetIsModified() => _isModified = false;
 
-  bool get exerciseSet => _exerciseId != null;
 
   /*
    * Exercise Details (type, comments, ...)
@@ -32,6 +34,8 @@ class ExerciseState extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get hasExerciseId => _exerciseId != null;
+
   void unsetExerciseId() {
     _exerciseId = null;
     _isModified = true;
@@ -43,5 +47,7 @@ class ExerciseState extends ChangeNotifier {
    *
    */
 
-  // TODO
+  final List<SetState> _sets = [];
+
+  bool get hasSets => _sets.isEmpty;
 }

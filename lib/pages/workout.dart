@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 
-import 'package:weightlifting.cc/pages/workout/exercises.dart';
-import 'package:weightlifting.cc/pages/workout/save_button.dart';
-import 'package:weightlifting.cc/pages/workout/workout_details.dart';
+import 'package:weightlifting.cc/pages/workout/exercises_widget.dart';
+import 'package:weightlifting.cc/pages/workout/save_button_widget.dart';
+import 'package:weightlifting.cc/pages/workout/workout_details_widget.dart';
 import 'package:weightlifting.cc/state/workout_state.dart';
 
 class WorkoutPage extends StatelessWidget {
@@ -45,7 +45,7 @@ class WorkoutPage extends StatelessWidget {
       return [
         ChangeNotifierProvider.value(
           value: _workout,
-          builder: (context, _) => SaveButton(context),
+          builder: (context, _) => SaveButtonWidget(context),
         ),
       ];
   }

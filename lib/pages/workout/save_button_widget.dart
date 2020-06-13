@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:weightlifting.cc/state/workout_state.dart';
 
-class SaveButton extends StatelessWidget {
+class SaveButtonWidget extends StatelessWidget {
   final BuildContext context;
 
-  SaveButton(this.context);
+  SaveButtonWidget(this.context);
 
   // Change notifier getters
   WorkoutState get workout => WorkoutState.of(context);

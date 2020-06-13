@@ -55,23 +55,32 @@ class WorkoutState extends ChangeNotifier {
    *
    */
 
-  int get count => 0;
-
   final List<ExerciseState> _exercises = [ExerciseState()];
 
   UnmodifiableListView<ExerciseState> get exercises =>
       UnmodifiableListView(_exercises);
 
-  void addExercise() {
+  /// Add new (empty) exercise
+  void newExercise() {
     _exercises.add(ExerciseState());
     _isModified = true;
     notifyListeners();
   }
 
-  int _activeSet = 0;
-  int get activeSet => _activeSet;
-  set activeSet(int idx) {
-    _activeSet = idx;
+  // Keep track of currently active, i.e. modifiable, set
+  int _activeExercise = 0;
+
+  int get activeExercise => _activeExercise;
+
+  /// Update active set and notify any listeners.
+  set activeExercise(int idx) {
+    _activeExercise = idx;
     notifyListeners();
   }
+
+  /// Check if current active exercise is the last exercise in the list of
+  /// all exercises.
+  bool get activeIsLast => activeExercise == (exercises.length - 1);
+
+
 }
