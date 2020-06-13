@@ -2,29 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout/exercise_selector.dart';
-
-class ExerciseState extends ChangeNotifier {
-  bool _isModified = false;
-  bool get isModified => _isModified;
-  void unsetIsModified() => _isModified = false;
-
-  bool get exerciseSet => _exerciseId != null;
-
-  int _exerciseId;
-  int get exerciseId => _exerciseId;
-
-  set exerciseId(int id) {
-    _exerciseId = id;
-    _isModified = true;
-    notifyListeners();
-  }
-
-  void unsetExerciseId() {
-    _exerciseId = null;
-    _isModified = true;
-    notifyListeners();
-  }
-}
+import 'package:weightlifting.cc/state/exercise_state.dart';
 
 class ExerciseTitleWidget extends StatelessWidget {
   final BuildContext context;

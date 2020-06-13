@@ -6,17 +6,17 @@ import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout/exercises.dart';
 import 'package:weightlifting.cc/pages/workout/save_button.dart';
 import 'package:weightlifting.cc/pages/workout/workout_details.dart';
+import 'package:weightlifting.cc/state/workout_state.dart';
 
 class WorkoutPage extends StatelessWidget {
   final BuildContext context;
 
   final bool locked;
 
-  // Change notifiers
-  final WorkoutDetails _details = WorkoutDetails();
-  final ExercisesState _exercises = ExercisesState();
-
   WorkoutPage(this.context, {this.locked: true});
+
+  // state
+  final WorkoutState _workout = WorkoutState();
 
   // localization
   DialogMessages get _dia => DialogMessages.of(context);
@@ -44,11 +44,8 @@ class WorkoutPage extends StatelessWidget {
     else
       return [
         ChangeNotifierProvider.value(
-          value: _details,
-          child: ChangeNotifierProvider.value(
-            value: _exercises,
-            builder: (context, _) => SaveButton(context),
-          ),
+          value: _workout,
+          builder: (context, _) => SaveButton(context),
         ),
       ];
   }
@@ -58,10 +55,8 @@ class WorkoutPage extends StatelessWidget {
    *
    */
 
-  bool get _isModified => _details.isModified || _exercises.isModified;
-
   Future<bool> _canPop(BuildContext context) async {
-    if (_isModified)
+    if (_workout.isModified)
       return await _dia.showDiscardDialog(context);
     else
       return true;
@@ -70,21 +65,14 @@ class WorkoutPage extends StatelessWidget {
   Widget _body(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _canPop(context),
-      child: ListView(
-        children: <Widget>[
-          Card(
-            child: ChangeNotifierProvider.value(
-              value: _details,
-              child: WorkoutDetailsWidget(),
-            ),
-          ),
-          Card(
-            child: ChangeNotifierProvider.value(
-              value: _exercises,
-              builder: (BuildContext context, _) => ExercisesWidget(context),
-            ),
-          ),
-        ],
+      child: ChangeNotifierProvider.value(
+        value: _workout,
+        builder: (context, _) => ListView(
+          children: <Widget>[
+            Card(child: WorkoutDetailsWidget()),
+            Card(child: ExercisesWidget(context)),
+          ],
+        ),
       ),
     );
   }
