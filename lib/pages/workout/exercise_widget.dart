@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/pages/workout/exercise_selector_widget.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 
-
-
 class ExerciseWidget extends StatelessWidget {
   final BuildContext context;
 

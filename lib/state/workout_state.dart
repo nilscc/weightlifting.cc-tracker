@@ -70,17 +70,21 @@ class WorkoutState extends ChangeNotifier {
   // Keep track of currently active, i.e. modifiable, set
   int _activeExercise = 0;
 
-  int get activeExercise => _activeExercise;
+  /// Get ID of active exercise
+  int get activeExerciseId => _activeExercise;
+
+  /// Get state of active exercise
+  ExerciseState get activeExercise => _exercises[activeExerciseId];
 
   /// Update active set and notify any listeners.
-  set activeExercise(int idx) {
+  set activeExerciseId(int idx) {
     _activeExercise = idx;
     notifyListeners();
   }
 
   /// Check if current active exercise is the last exercise in the list of
   /// all exercises.
-  bool get activeIsLast => activeExercise == (exercises.length - 1);
+  bool get activeIsLast => activeExerciseId == (exercises.length - 1);
 
 
 }

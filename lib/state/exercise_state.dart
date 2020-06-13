@@ -5,8 +5,8 @@ import 'package:weightlifting.cc/state/set_state.dart';
 class ExerciseState extends ChangeNotifier {
 
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
-  static ExerciseState of(BuildContext context) =>
-      Provider.of<ExerciseState>(context, listen: false);
+  static ExerciseState of(BuildContext context, {bool listen: false}) =>
+      Provider.of<ExerciseState>(context, listen: listen);
 
   bool get isEmpty => !(hasExerciseId && hasSets);
 
@@ -25,7 +25,7 @@ class ExerciseState extends ChangeNotifier {
    *
    */
 
-  int _exerciseId;
+  int _exerciseId, _previousExerciseId;
   int get exerciseId => _exerciseId;
 
   set exerciseId(int id) {
@@ -37,7 +37,14 @@ class ExerciseState extends ChangeNotifier {
   bool get hasExerciseId => _exerciseId != null;
 
   void unsetExerciseId() {
+    _previousExerciseId = _exerciseId;
     _exerciseId = null;
+    _isModified = true;
+    notifyListeners();
+  }
+
+  void resetPreviousExerciseId() {
+    _exerciseId = _previousExerciseId;
     _isModified = true;
     notifyListeners();
   }
