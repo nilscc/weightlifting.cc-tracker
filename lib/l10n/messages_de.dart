@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "HOME_NO_WORKOUTS" : MessageLookupByLibrary.simpleMessage("Keine Workouts gespeichert."),
     "HOME_UNREGISTERED_SUBTITLE" : MessageLookupByLibrary.simpleMessage("Bitte registriere deinen Account mit einer Emailadresse um Workouts langfristig zu sichern."),
     "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("Account nicht registriert."),
-    "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("Übung auswählen...")
+    "WORKOUT_REPETITIONS" : MessageLookupByLibrary.simpleMessage("Wiederholungen"),
+    "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("Übung auswählen..."),
+    "WORKOUT_WEIGHT_KG" : MessageLookupByLibrary.simpleMessage("Gewicht (kg)")
   };
 }

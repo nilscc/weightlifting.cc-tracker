@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "HOME_NO_WORKOUTS" : MessageLookupByLibrary.simpleMessage("HOME_NO_WORKOUTS"),
     "HOME_UNREGISTERED_SUBTITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_SUBTITLE"),
     "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_TITLE"),
-    "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("WORKOUT_SELECT_EXERCISE")
+    "WORKOUT_REPETITIONS" : MessageLookupByLibrary.simpleMessage("WORKOUT_REPETITIONS"),
+    "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("WORKOUT_SELECT_EXERCISE"),
+    "WORKOUT_WEIGHT_KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_WEIGHT_KG")
   };
 }

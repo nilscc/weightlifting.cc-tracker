@@ -9,6 +9,5 @@ void main() {
 
     expect(exercise.isModified, false);
     expect(exercise.hasExerciseId, false);
-    expect(exercise.isEmpty, true);
   });
 }

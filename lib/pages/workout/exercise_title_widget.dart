@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
-import 'package:weightlifting.cc/state/set_state.dart';
 
 class ExerciseTitleWidget extends StatefulWidget {
   @override

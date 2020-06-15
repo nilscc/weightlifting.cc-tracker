@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-06-13T00:33:37.509970",
+  "@@last_modified": "2020-06-13T20:34:43.790267",
   "DIALOG_DISCARD_TITLE": "DIALOG_DISCARD_TITLE",
   "@DIALOG_DISCARD_TITLE": {
     "type": "text",
@@ -38,6 +38,16 @@
   },
   "WORKOUT_SELECT_EXERCISE": "WORKOUT_SELECT_EXERCISE",
   "@WORKOUT_SELECT_EXERCISE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_REPETITIONS": "WORKOUT_REPETITIONS",
+  "@WORKOUT_REPETITIONS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_WEIGHT_KG": "WORKOUT_WEIGHT_KG",
+  "@WORKOUT_WEIGHT_KG": {
     "type": "text",
     "placeholders": {}
   },

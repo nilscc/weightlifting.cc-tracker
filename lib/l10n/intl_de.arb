@@ -11,6 +11,8 @@
   "HOME_UNREGISTERED_SUBTITLE": "Bitte registriere deinen Account mit einer Emailadresse um Workouts langfristig zu sichern.",
 
   "WORKOUT_SELECT_EXERCISE": "Übung auswählen...",
+  "WORKOUT_WEIGHT_KG": "Gewicht (kg)",
+  "WORKOUT_REPETITIONS": "Wiederholungen",
 
   "EXERCISE_CATEGORY_K1_COMPETITION": "K1 - Wettkampfübungen",
   "EXERCISE_01_SNATCH": "Reißen",

@@ -49,6 +49,9 @@ class WorkoutMessages {
   static WorkoutMessages of(BuildContext context) => Loc.of(context).workout;
 
   String get selectExercise => Intl.message("WORKOUT_SELECT_EXERCISE");
+
+  String get repetitions => Intl.message("WORKOUT_REPETITIONS");
+  String get weightKg => Intl.message("WORKOUT_WEIGHT_KG");
 }
 
 class ExerciseMessages {

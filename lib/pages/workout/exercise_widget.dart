@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/pages/workout/exercise_selector_widget.dart';
+import 'package:weightlifting.cc/pages/workout/set_list_widget.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 
 class ExerciseWidget extends StatelessWidget {
@@ -18,7 +19,7 @@ class ExerciseWidget extends StatelessWidget {
       return _buildExerciseSelector(context);
   }
 
-  Widget _buildSets(BuildContext context) => Text('Sets...');
+  Widget _buildSets(BuildContext context) => SetListWidget(context);
 
   Widget _buildExerciseSelector(context) => ExerciseSelectorWidget(context);
 }

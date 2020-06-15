@@ -1,14 +1,13 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
 class ExerciseState extends ChangeNotifier {
-
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
   static ExerciseState of(BuildContext context, {bool listen: false}) =>
       Provider.of<ExerciseState>(context, listen: listen);
-
-  bool get isEmpty => !(hasExerciseId && hasSets);
 
   /*
    * Internal meta data, e.g. modified status
@@ -16,9 +15,16 @@ class ExerciseState extends ChangeNotifier {
    */
 
   bool _isModified = false;
-  bool get isModified => _isModified;
-  void unsetIsModified() => _isModified = false;
 
+  /// Check if exercise (or any of its sets) has been modified
+  bool get isModified => _isModified && _sets.any((set) => set.isModified);
+
+  /// Unset modified state, e.g. after saving exercise (and all of its sets!)
+  /// to JSON files.
+  void unsetIsModified() {
+    _isModified = false;
+    _sets.forEach((set) => set.unsetIsModified());
+  }
 
   /*
    * Exercise Details (type, comments, ...)
@@ -26,6 +32,7 @@ class ExerciseState extends ChangeNotifier {
    */
 
   int _exerciseId, _previousExerciseId;
+
   int get exerciseId => _exerciseId;
 
   set exerciseId(int id) {
@@ -54,7 +61,21 @@ class ExerciseState extends ChangeNotifier {
    *
    */
 
-  final List<SetState> _sets = [];
+  // Set list should by default contain one (the first) set
+  final List<SetState> _sets = [SetState(20.0, 0), SetState(40.0, 5)];
 
-  bool get hasSets => _sets.isEmpty;
+  UnmodifiableListView<SetState> get sets =>
+      UnmodifiableListView<SetState>(_sets);
+
+  int _activeSetId = 0;
+
+  int get activeSetId => _activeSetId;
+
+  set activeSetId(int setId) {
+    _activeSetId = setId;
+    // no need to set to modified for changing sets, but notify listeners
+    notifyListeners();
+  }
+
+  SetState get activeSet => _sets[_activeSetId];
 }
