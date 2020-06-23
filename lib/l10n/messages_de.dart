@@ -66,6 +66,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("Account nicht registriert."),
     "WORKOUT_REPETITIONS" : MessageLookupByLibrary.simpleMessage("Wiederholungen"),
     "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("Übung auswählen..."),
+    "WORKOUT_SET_LIST_ADD_10KG" : MessageLookupByLibrary.simpleMessage("+10kg"),
+    "WORKOUT_SET_LIST_ADD_2_5KG" : MessageLookupByLibrary.simpleMessage("+2,5kg"),
+    "WORKOUT_SET_LIST_ADD_5KG" : MessageLookupByLibrary.simpleMessage("+5kg"),
     "WORKOUT_WEIGHT_KG" : MessageLookupByLibrary.simpleMessage("Gewicht (kg)")
   };
 }

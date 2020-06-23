@@ -52,6 +52,10 @@ class WorkoutMessages {
 
   String get repetitions => Intl.message("WORKOUT_REPETITIONS");
   String get weightKg => Intl.message("WORKOUT_WEIGHT_KG");
+
+  String get add2_5kg => Intl.message("WORKOUT_SET_LIST_ADD_2_5KG");
+  String get add5kg => Intl.message("WORKOUT_SET_LIST_ADD_5KG");
+  String get add10kg => Intl.message("WORKOUT_SET_LIST_ADD_10KG");
 }
 
 class ExerciseMessages {

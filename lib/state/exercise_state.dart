@@ -62,7 +62,7 @@ class ExerciseState extends ChangeNotifier {
    */
 
   // Set list should by default contain one (the first) set
-  final List<SetState> _sets = [SetState(20.0, 0), SetState(40.0, 5)];
+  final List<SetState> _sets = [SetState(20.0, 1)];
 
   UnmodifiableListView<SetState> get sets =>
       UnmodifiableListView<SetState>(_sets);
@@ -78,4 +78,9 @@ class ExerciseState extends ChangeNotifier {
   }
 
   SetState get activeSet => _sets[_activeSetId];
+
+  void addSet(SetState setState) {
+    _sets.add(setState);
+    notifyListeners();
+  }
 }

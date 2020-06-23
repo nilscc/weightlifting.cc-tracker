@@ -16,22 +16,54 @@ class SetListWidget extends StatelessWidget {
   ExerciseState get _exercise => ExerciseState.of(context);
 
   // localization messages
-  //ExerciseMessages get _exerciseMessages => ExerciseMessages.of(context);
+  WorkoutMessages get _workoutMessages => WorkoutMessages.of(context);
 
   @override
   Widget build(BuildContext context) => Column(
-        children: _exercise.sets
-            .asMap()
-            .map((idx, set) => MapEntry(idx, _buildSet(idx, set)))
-            .values
-            .toList(),
+        children: _buildSetList() + [Row(children: _buildSetListControls())],
       );
+
+  List<Widget> _buildSetListControls() => [
+    RaisedButton(
+      child: Icon(Icons.content_copy),
+      onPressed: _copyLastSet,
+    ),
+    FlatButton(
+      child: Text(_workoutMessages.add2_5kg),
+      onPressed: () => _copyLastSet(weightIncrement: 2.5),
+    ),
+    FlatButton(
+      child: Text(_workoutMessages.add5kg),
+      onPressed: () => _copyLastSet(weightIncrement: 5),
+    ),
+
+    FlatButton(
+      child: Text(_workoutMessages.add10kg),
+      onPressed: () => _copyLastSet(weightIncrement: 10),
+    ),
+  ];
+
+  void _copyLastSet({double weightIncrement = 0.0, int repIncrement = 0}) {
+
+    // get last element
+    final SetState lastSet = _exercise.sets.last;
+
+    // append new set state
+    _exercise.addSet(SetState(lastSet.weight + weightIncrement, lastSet.reps + repIncrement));
+
+    // set last set as active
+    _tapSet(_exercise.sets.length - 1);
+  }
+
+  List<Widget> _buildSetList() =>_exercise.sets
+      .asMap()
+      .map((idx, set) => MapEntry(idx, _buildSet(idx, set)))
+      .values
+      .toList();
 
   Widget _buildSet(int index, SetState set) {
     // check if current set is active
     final active = _exercise.activeSetId == index;
-
-    print('Set #$index: active=$active');
 
     if (active)
       return _activeSet(index, set);
@@ -59,7 +91,14 @@ class SetListWidget extends StatelessWidget {
         ),
       );
 
-  void _tapSet(int setIndex) {
+  void _setActiveSet(int setIndex) {
     _exercise.activeSetId = setIndex;
+  }
+
+  void _tapSet(int setIndex) {
+    if (_exercise.activeSetId == setIndex)
+      _exercise.activeSetId = null;
+    else
+      _exercise.activeSetId = setIndex;
   }
 }

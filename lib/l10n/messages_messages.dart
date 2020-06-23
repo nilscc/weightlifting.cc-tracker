@@ -66,6 +66,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_TITLE"),
     "WORKOUT_REPETITIONS" : MessageLookupByLibrary.simpleMessage("WORKOUT_REPETITIONS"),
     "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("WORKOUT_SELECT_EXERCISE"),
+    "WORKOUT_SET_LIST_ADD_10KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_SET_LIST_ADD_10KG"),
+    "WORKOUT_SET_LIST_ADD_2_5KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_SET_LIST_ADD_2_5KG"),
+    "WORKOUT_SET_LIST_ADD_5KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_SET_LIST_ADD_5KG"),
     "WORKOUT_WEIGHT_KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_WEIGHT_KG")
   };
 }

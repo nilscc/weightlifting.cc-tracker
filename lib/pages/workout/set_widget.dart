@@ -22,15 +22,15 @@ class _State extends State<SetWidget> {
   final int divisions;
 
   _State(this.context,
-      {this.increment: 2.5, this.divisions: 8, this.minValue: 20.0});
+      {this.increment: 2.5, this.divisions: 8, this.minValue: 20.0})
+      : _sliderMin = max(minValue, SetState.of(context).weight - 0.5 * divisions * increment);
 
   // read-only access to set state
   SetState get _state => SetState.of(context);
 
   double _sliderMin;
 
-  double get _sliderMax => max(minValue + divisions * increment,
-      (_sliderMin ?? minValue) + divisions * increment);
+  double get _sliderMax => _sliderMin + divisions * increment;
 
   WorkoutMessages get _msg => WorkoutMessages.of(context);
 
@@ -48,14 +48,14 @@ class _State extends State<SetWidget> {
           Expanded(
             child: Slider(
               value: SetState.of(context, listen: true).weight,
-              min: _sliderMin == null ? minValue : max(minValue, _sliderMin),
+              min: _sliderMin,
               max: _sliderMax,
               divisions: divisions,
               onChanged: (value) {
                 _state.weight = value;
               },
               onChangeEnd: (value) => setState(() {
-                _sliderMin = max(minValue, value - divisions / 2 * increment);
+                _sliderMin = max(minValue, value - 0.5 * divisions * increment);
               }),
             ),
           ),

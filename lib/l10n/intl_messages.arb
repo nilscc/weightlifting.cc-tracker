@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-06-13T20:34:43.790267",
+  "@@last_modified": "2020-06-23T20:49:06.669280",
   "DIALOG_DISCARD_TITLE": "DIALOG_DISCARD_TITLE",
   "@DIALOG_DISCARD_TITLE": {
     "type": "text",
@@ -48,6 +48,21 @@
   },
   "WORKOUT_WEIGHT_KG": "WORKOUT_WEIGHT_KG",
   "@WORKOUT_WEIGHT_KG": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_SET_LIST_ADD_2_5KG": "WORKOUT_SET_LIST_ADD_2_5KG",
+  "@WORKOUT_SET_LIST_ADD_2_5KG": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_SET_LIST_ADD_5KG": "WORKOUT_SET_LIST_ADD_5KG",
+  "@WORKOUT_SET_LIST_ADD_5KG": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_SET_LIST_ADD_10KG": "WORKOUT_SET_LIST_ADD_10KG",
+  "@WORKOUT_SET_LIST_ADD_10KG": {
     "type": "text",
     "placeholders": {}
   },
