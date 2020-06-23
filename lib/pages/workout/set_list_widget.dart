@@ -16,6 +16,7 @@ class SetListWidget extends StatelessWidget {
   ExerciseState get _exercise => ExerciseState.of(context);
 
   // localization messages
+  DialogMessages get _dialogMessages => DialogMessages.of(context);
   WorkoutMessages get _workoutMessages => WorkoutMessages.of(context);
 
   @override
@@ -24,38 +25,44 @@ class SetListWidget extends StatelessWidget {
       );
 
   List<Widget> _buildSetListControls() => [
-    RaisedButton(
-      child: Icon(Icons.content_copy),
-      onPressed: _copyLastSet,
-    ),
-    FlatButton(
-      child: Text(_workoutMessages.add2_5kg),
-      onPressed: () => _copyLastSet(weightIncrement: 2.5),
-    ),
-    FlatButton(
-      child: Text(_workoutMessages.add5kg),
-      onPressed: () => _copyLastSet(weightIncrement: 5),
-    ),
-
-    FlatButton(
-      child: Text(_workoutMessages.add10kg),
-      onPressed: () => _copyLastSet(weightIncrement: 10),
-    ),
-  ];
+        RaisedButton(
+          child: Icon(Icons.content_copy),
+          onPressed: _copyLastSet,
+        ),
+        FlatButton(
+          child: Text(_workoutMessages.add2_5kg),
+          onPressed: () => _copyLastSet(weightIncrement: 2.5),
+        ),
+        FlatButton(
+          child: Text(_workoutMessages.add5kg),
+          onPressed: () => _copyLastSet(weightIncrement: 5),
+        ),
+        FlatButton(
+          child: Text(_workoutMessages.add10kg),
+          onPressed: () => _copyLastSet(weightIncrement: 10),
+        ),
+      ];
 
   void _copyLastSet({double weightIncrement = 0.0, int repIncrement = 0}) {
-
     // get last element
     final SetState lastSet = _exercise.sets.last;
 
     // append new set state
-    _exercise.addSet(SetState(lastSet.weight + weightIncrement, lastSet.reps + repIncrement));
+    _exercise.addSet(SetState(
+        lastSet.weight + weightIncrement, lastSet.reps + repIncrement));
 
     // set last set as active
     _tapSet(_exercise.sets.length - 1);
   }
 
-  List<Widget> _buildSetList() =>_exercise.sets
+  void _deleteSet(int setId) async {
+    final bool discard = await _dialogMessages.showDiscardDialog(context);
+
+    if (discard)
+      _exercise.deleteSet(setId);
+  }
+
+  List<Widget> _buildSetList() => _exercise.sets
       .asMap()
       .map((idx, set) => MapEntry(idx, _buildSet(idx, set)))
       .values
@@ -73,6 +80,7 @@ class SetListWidget extends StatelessWidget {
 
   Widget _activeSet(int index, SetState set) => ListTile(
         onTap: () => _tapSet(index),
+        onLongPress: () => _deleteSet(index),
         title: ChangeNotifierProvider.value(
           value: set,
           builder: (context, _) => SetTitleWidget(context),
@@ -85,6 +93,7 @@ class SetListWidget extends StatelessWidget {
 
   Widget _inactiveSet(int index, SetState set) => ListTile(
         onTap: () => _tapSet(index),
+        onLongPress: () => _deleteSet(index),
         title: ChangeNotifierProvider.value(
           value: set,
           builder: (context, _) => SetTitleWidget(context),

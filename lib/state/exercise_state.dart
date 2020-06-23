@@ -83,4 +83,18 @@ class ExerciseState extends ChangeNotifier {
     _sets.add(setState);
     notifyListeners();
   }
+
+  void deleteSet(int setId) {
+    assert(0 <= setId && setId < _sets.length);
+
+    _sets.removeAt(setId);
+
+    // check if last element was removed
+    if (_sets.isEmpty) {
+      _sets.add(SetState(20.0, 1));
+      _activeSetId = 0;
+    }
+
+    notifyListeners();
+  }
 }
