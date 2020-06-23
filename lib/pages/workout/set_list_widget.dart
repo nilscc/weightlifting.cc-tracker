@@ -52,14 +52,13 @@ class SetListWidget extends StatelessWidget {
         lastSet.weight + weightIncrement, lastSet.reps + repIncrement));
 
     // set last set as active
-    _tapSet(_exercise.sets.length - 1);
+    _setActiveSet(_exercise.sets.length - 1);
   }
 
   void _deleteSet(int setId) async {
     final bool discard = await _dialogMessages.showDiscardDialog(context);
 
-    if (discard)
-      _exercise.deleteSet(setId);
+    if (discard) _exercise.deleteSet(setId);
   }
 
   List<Widget> _buildSetList() => _exercise.sets
@@ -105,9 +104,6 @@ class SetListWidget extends StatelessWidget {
   }
 
   void _tapSet(int setIndex) {
-    if (_exercise.activeSetId == setIndex)
-      _exercise.activeSetId = null;
-    else
-      _exercise.activeSetId = setIndex;
+    _setActiveSet(_exercise.activeSetId == setIndex ? null : setIndex);
   }
 }

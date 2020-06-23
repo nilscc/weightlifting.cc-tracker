@@ -94,6 +94,8 @@ class ExerciseState extends ChangeNotifier {
       _sets.add(SetState(20.0, 1));
       _activeSetId = 0;
     }
+    else
+      _activeSetId -= 1;
 
     notifyListeners();
   }
