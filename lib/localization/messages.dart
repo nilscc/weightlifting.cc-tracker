@@ -36,6 +36,8 @@ class DialogMessages {
 class HomeMessages {
   static HomeMessages of(BuildContext context) => Loc.of(context).home;
 
+  String get loadingWorkouts => Intl.message("HOME_LOADING_WORKOUTS");
+
   String get noWorkouts => Intl.message(
         "HOME_NO_WORKOUTS",
         desc: "Message displayed when no workouts have been added yet.",
@@ -48,7 +50,11 @@ class HomeMessages {
 class WorkoutMessages {
   static WorkoutMessages of(BuildContext context) => Loc.of(context).workout;
 
+  String get workoutTitleLabel => Intl.message("WORKOUT_TITLE_LABEL");
+  String get workoutDateLabel => Intl.message("WORKOUT_DATE_LABEL");
+
   String get selectExercise => Intl.message("WORKOUT_SELECT_EXERCISE");
+  String get addExercise => Intl.message("WORKOUT_ADD_EXERCISE");
 
   String get repetitions => Intl.message("WORKOUT_REPETITIONS");
   String get weightKg => Intl.message("WORKOUT_WEIGHT_KG");
@@ -164,4 +170,11 @@ class ExerciseMessages {
       };
 
   List<int> categoryExercises(int categoryId) => _categoryExercises[categoryId];
+
+  int exerciseCategory(int exerciseId) {
+    for (int c in _categoryExercises.keys) {
+      if (_categoryExercises[c].contains(exerciseId))
+        return c;
+    }
+  }
 }

@@ -62,18 +62,16 @@ class WorkoutPage extends StatelessWidget {
       return true;
   }
 
-  Widget _body(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _canPop(context),
-      child: ChangeNotifierProvider.value(
-        value: _workout,
-        builder: (context, _) => ListView(
-          children: <Widget>[
-            Card(child: WorkoutDetailsWidget()),
-            Card(child: ExerciseListWidget(context)),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _body(BuildContext context) => WillPopScope(
+            onWillPop: () => _canPop(context),
+            child: ChangeNotifierProvider.value(
+              value: _workout,
+              builder: (context, _) => ListView(
+                children: <Widget>[
+                  WorkoutDetailsWidget(context),
+                  ExerciseListWidget(context),
+                ],
+              ),
+            ),
+          );
 }

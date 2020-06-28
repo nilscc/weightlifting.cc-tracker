@@ -35,7 +35,7 @@ class MainApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         Loc.delegate,
       ],
-      home: HomePage(),
+      builder: (context,_) => HomePage(context),
     );
   }
 

@@ -17,7 +17,7 @@ class ExerciseState extends ChangeNotifier {
   bool _isModified = false;
 
   /// Check if exercise (or any of its sets) has been modified
-  bool get isModified => _isModified && _sets.any((set) => set.isModified);
+  bool get isModified => _isModified || _sets.any((set) => set.isModified);
 
   /// Unset modified state, e.g. after saving exercise (and all of its sets!)
   /// to JSON files.
@@ -36,24 +36,35 @@ class ExerciseState extends ChangeNotifier {
   int get exerciseId => _exerciseId;
 
   set exerciseId(int id) {
-    _exerciseId = id;
-    _isModified = true;
-    notifyListeners();
+    print('set exerciseId = $id');
+
+    if (id != _exerciseId) {
+      _exerciseId = id;
+      _isModified = true;
+
+      notifyListeners();
+    }
   }
 
   bool get hasExerciseId => _exerciseId != null;
 
   void unsetExerciseId() {
-    _previousExerciseId = _exerciseId;
-    _exerciseId = null;
-    _isModified = true;
-    notifyListeners();
+    if (_exerciseId != null) {
+      _previousExerciseId = _exerciseId;
+      _exerciseId = null;
+      _isModified = true;
+
+      notifyListeners();
+    }
   }
 
   void resetPreviousExerciseId() {
-    _exerciseId = _previousExerciseId;
-    _isModified = true;
-    notifyListeners();
+    if (_previousExerciseId != null) {
+      _exerciseId = _previousExerciseId;
+      _isModified = true;
+
+      notifyListeners();
+    }
   }
 
   /*
@@ -73,6 +84,7 @@ class ExerciseState extends ChangeNotifier {
 
   set activeSetId(int setId) {
     _activeSetId = setId;
+
     // no need to set to modified for changing sets, but notify listeners
     notifyListeners();
   }
@@ -81,6 +93,8 @@ class ExerciseState extends ChangeNotifier {
 
   void addSet(SetState setState) {
     _sets.add(setState);
+    _isModified = true;
+
     notifyListeners();
   }
 
@@ -96,6 +110,8 @@ class ExerciseState extends ChangeNotifier {
     }
     else
       _activeSetId -= 1;
+
+    _isModified = true;
 
     notifyListeners();
   }

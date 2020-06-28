@@ -2,12 +2,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'workout.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Workout {
 
-  Workout(this.date, this.title, this.exercises);
+  Workout(this.date, this.hasTime, this.title, this.exercises);
 
   final DateTime date;
+
+  @JsonKey(defaultValue: false)
+  final bool hasTime;
 
   @JsonKey(required: false)
   final String title;
@@ -19,7 +22,7 @@ class Workout {
   Map<String, dynamic> toJson() => _$WorkoutToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Exercise {
 
   Exercise(this.id, this.name, this.sets);
@@ -37,7 +40,7 @@ class Exercise {
   Map<String, dynamic> toJson() => _$ExerciseToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Set {
   Set(this.weightKg, this.repetitions);
 

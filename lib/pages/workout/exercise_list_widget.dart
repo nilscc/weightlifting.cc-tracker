@@ -20,16 +20,28 @@ class ExerciseListWidget extends StatelessWidget {
   DialogMessages get _dia => DialogMessages.of(context);
 
   @override
-  Widget build(BuildContext context) => Stepper(
-        physics: NeverScrollableScrollPhysics(),
-        steps: WorkoutState.of(context)
-            .exercises
-            .asMap()
-            .map((i, e) => MapEntry(i, _renderExercise(i, e)))
-            .values
-            .toList(),
-        onStepCancel: _stepCancel,
+  Widget build(BuildContext context) => Column(
+        children: WorkoutState.of(context, listen: true)
+                .exercises
+                .asMap()
+                .map((i, e) => MapEntry(i, _renderExercise(i, e)))
+                .values
+                .toList() +
+            [
+              ButtonBar(
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text(loc.addExercise),
+                    onPressed: _stepContinue,
+                  )
+                ],
+              )
+            ],
       );
+
+  void _stepContinue() {
+    _workout.addExercise();
+  }
 
   void _stepCancel() async {
     // get exercise of current step
@@ -41,29 +53,30 @@ class ExerciseListWidget extends StatelessWidget {
     if (!exercise.hasExerciseId)
       exercise.resetPreviousExerciseId();
     else
-      _discardActiveSet();
+      _discardActiveExercise();
   }
 
-  void _discardActiveSet() async {
+  void _discardActiveExercise() async {
     final bool discard = await _dia.showDiscardDialog(context);
 
-    print('Discard active set = $discard');
+    print('Discard active exercise = $discard');
 
-    // TODO: remove active set, close workout if last?
+    // TODO: remove active exercise
   }
 
-  Step _renderExercise(int index, ExerciseState e) => Step(
-        title: ChangeNotifierProvider.value(
-          value: e,
-          builder: (context, _) => ExerciseTitleWidget(),
-        ),
-        content: ChangeNotifierProvider.value(
-          value: e,
-          builder: (context, _) => Padding(
-            padding: EdgeInsets.all(1.0),
-            child: ExerciseWidget(context),
+  Widget _renderExercise(int index, ExerciseState e) =>
+      ChangeNotifierProvider.value(
+        value: e,
+        builder: (context, _) => Card(
+          child: Column(
+            children: <Widget>[
+              ExerciseTitleWidget(),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
+                child: ExerciseWidget(context),
+              ),
+            ],
           ),
         ),
-        isActive: WorkoutState.of(context).activeExerciseId == index,
       );
 }

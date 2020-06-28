@@ -16,6 +16,8 @@ class _State extends State<ExerciseSelectorWidget> {
 
   int _expanded;
 
+  ExerciseState get _exerciseState => ExerciseState.of(context);
+
   @override
   Widget build(BuildContext context) => _buildCategories(context);
 
@@ -49,9 +51,6 @@ class _State extends State<ExerciseSelectorWidget> {
 
   Widget _buildExercise(int exerciseId) => FlatButton(
     child: Text(_exc.exercise(exerciseId)),
-    onPressed: () {
-      ExerciseState s = Provider.of<ExerciseState>(context, listen: false);
-      s.exerciseId = exerciseId;
-    },
+    onPressed: () => _exerciseState.exerciseId = exerciseId,
   );
 }

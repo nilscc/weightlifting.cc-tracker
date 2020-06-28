@@ -11,14 +11,10 @@ class ExerciseTitleWidget extends StatefulWidget {
 class _State extends State<ExerciseTitleWidget> {
   @override
   Widget build(BuildContext context) {
-
     // keep track of most recent exercise ID
     _updateExerciseId();
 
-    return Center(
-        child: Row(
-      children: [_buildExerciseTitle()],
-    ));
+    return _buildExerciseTitle();
   }
 
   /// Shared exercise state (read-only)
@@ -42,14 +38,24 @@ class _State extends State<ExerciseTitleWidget> {
     }
   }
 
-  // Build main title
-  Widget _buildExerciseTitle() {
-    if (_hasExerciseId)
-      return FlatButton(
-        child: Text(_exc.exercise(_recentExerciseId)),
-        onPressed: _state.unsetExerciseId,
-      );
+  String get _title =>
+      _hasExerciseId ? _exc.exercise(_recentExerciseId) : _wor.selectExercise;
+
+  Widget get _subtitle => _hasExerciseId
+      ? Text(_exc.category(_exc.exerciseCategory(_recentExerciseId)))
+      : null;
+
+  void _onTap() {
+    if (_state.hasExerciseId)
+      _state.unsetExerciseId();
     else
-      return Text(_wor.selectExercise);
+      _state.resetPreviousExerciseId();
   }
+
+  // Build main title
+  Widget _buildExerciseTitle() => ListTile(
+        title: Text(_title),
+        subtitle: _subtitle,
+        onTap: _onTap,
+      );
 }

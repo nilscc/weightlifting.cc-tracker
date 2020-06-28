@@ -1,11 +1,25 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/json/workout.dart';
+import 'package:weightlifting.cc/localization/messages.dart';
 
 import 'package:weightlifting.cc/pages/workout.dart';
 import 'package:weightlifting.cc/pages/home/login_header.dart';
 import 'package:weightlifting.cc/pages/home/workout_list.dart';
 
 class HomePage extends StatelessWidget {
+
+  final BuildContext context;
+
+  HomePage(this.context);
+
+  // Localization messages
+  HomeMessages get _homeMessages => HomeMessages.of(context);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -31,16 +45,32 @@ class HomePage extends StatelessWidget {
   Widget _body(BuildContext context) => Column(
         children: <Widget>[
           _header(context),
-          _workouts(context),
+          FutureBuilder(
+            future: _buildWorkouts(context),
+            builder: (context, snapshot) {
+              if (snapshot.hasData)
+                return snapshot.data;
+              else
+                return _loadingWorkouts();
+            },
+          ),
         ],
       );
 
   Widget _header(BuildContext context) => LoginHeader(context);
 
-  Widget _workouts(BuildContext context) => ChangeNotifierProvider(
-        create: (_) => new Workouts(),
-        builder: (BuildContext context, _) => WorkoutList(context),
-      );
+  Widget _loadingWorkouts() => Text(_homeMessages.loadingWorkouts);
+
+  final Workouts _workouts = new Workouts();
+
+  Future<Widget> _buildWorkouts(BuildContext context) async {
+    await _workouts.load();
+
+    return ChangeNotifierProvider.value(
+      value: _workouts,
+      builder: (BuildContext context, _) => WorkoutList(context),
+    );
+  }
 
   /*
    * Buttons
@@ -48,15 +78,13 @@ class HomePage extends StatelessWidget {
    */
 
   Widget _addButton(BuildContext context) => FloatingActionButton(
-    child: Icon(Icons.add),
-    onPressed: () async {
-      final Workout w = await Navigator.push(context, _newWorkoutRoute());
-      print('New workout: ' + w.toString());
-    }
-  );
+      child: Icon(Icons.add),
+      onPressed: () async {
+        final Workout w = await Navigator.push(context, _newWorkoutRoute());
+        _workouts.load();
+      });
 
   Route<Workout> _newWorkoutRoute() => MaterialPageRoute(
-    builder: (BuildContext context) => WorkoutPage(context, locked: false),
-  );
-
+        builder: (BuildContext context) => WorkoutPage(context, locked: false),
+      );
 }

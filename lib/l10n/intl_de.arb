@@ -6,11 +6,17 @@
   "DIALOG_DISCARD_BUTTON_DISCARD": "Verwerfen",
   "DIALOG_DISCARD_BUTTON_BACK": "Zurück",
 
+  "HOME_LOADING_WORKOUTS": "Lade Workouts...",
   "HOME_NO_WORKOUTS": "Keine Workouts gespeichert.",
   "HOME_UNREGISTERED_TITLE": "Account nicht registriert.",
   "HOME_UNREGISTERED_SUBTITLE": "Bitte registriere deinen Account mit einer Emailadresse um Workouts langfristig zu sichern.",
 
+  "WORKOUT_TITLE_LABEL": "Workout Titel",
+  "WORKOUT_DATE_LABEL": "Datum",
+
   "WORKOUT_SELECT_EXERCISE": "Übung auswählen...",
+  "WORKOUT_ADD_EXERCISE":  "Übung hinzufügen",
+
   "WORKOUT_WEIGHT_KG": "Gewicht (kg)",
   "WORKOUT_REPETITIONS": "Wiederholungen",
 

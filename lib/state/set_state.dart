@@ -36,6 +36,8 @@ class SetState extends ChangeNotifier {
     assert(weight >= 0);
 
     _weight = weight;
+    _isModified = true;
+
     notifyListeners();
   }
 
@@ -47,6 +49,8 @@ class SetState extends ChangeNotifier {
     assert(reps >= 0);
 
     _reps = reps;
+    _isModified = true;
+
     notifyListeners();
   }
 

@@ -21,7 +21,7 @@ class SetListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        children: _buildSetList() + [Row(children: _buildSetListControls())],
+        children: _buildSetList() + [ButtonBar(children: _buildSetListControls())],
       );
 
   List<Widget> _buildSetListControls() => [

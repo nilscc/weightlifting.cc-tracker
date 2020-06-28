@@ -29,6 +29,8 @@ dependencies:
   intl: ^0.16.1
   intl_translation:
   provider: ^4.0.4
+  path_provider: ^1.6.11
+  path: ^1.6.4
 
 dev_dependencies:
   flutter_test:

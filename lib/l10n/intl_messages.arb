@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-06-23T20:49:06.669280",
+  "@@last_modified": "2020-06-28T20:26:39.999453",
   "DIALOG_DISCARD_TITLE": "DIALOG_DISCARD_TITLE",
   "@DIALOG_DISCARD_TITLE": {
     "type": "text",
@@ -20,6 +20,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "HOME_LOADING_WORKOUTS": "HOME_LOADING_WORKOUTS",
+  "@HOME_LOADING_WORKOUTS": {
+    "type": "text",
+    "placeholders": {}
+  },
   "HOME_NO_WORKOUTS": "HOME_NO_WORKOUTS",
   "@HOME_NO_WORKOUTS": {
     "description": "Message displayed when no workouts have been added yet.",
@@ -36,8 +41,23 @@
     "type": "text",
     "placeholders": {}
   },
+  "WORKOUT_TITLE_LABEL": "WORKOUT_TITLE_LABEL",
+  "@WORKOUT_TITLE_LABEL": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_DATE_LABEL": "WORKOUT_DATE_LABEL",
+  "@WORKOUT_DATE_LABEL": {
+    "type": "text",
+    "placeholders": {}
+  },
   "WORKOUT_SELECT_EXERCISE": "WORKOUT_SELECT_EXERCISE",
   "@WORKOUT_SELECT_EXERCISE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "WORKOUT_ADD_EXERCISE": "WORKOUT_ADD_EXERCISE",
+  "@WORKOUT_ADD_EXERCISE": {
     "type": "text",
     "placeholders": {}
   },

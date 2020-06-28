@@ -61,14 +61,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "EXERCISE_CATEGORY_K5_SQUATS" : MessageLookupByLibrary.simpleMessage("EXERCISE_CATEGORY_K5_SQUATS"),
     "EXERCISE_CATEGORY_K6_POWER" : MessageLookupByLibrary.simpleMessage("EXERCISE_CATEGORY_K6_POWER"),
     "EXERCISE_CATEGORY_K7_COMPLEX" : MessageLookupByLibrary.simpleMessage("EXERCISE_CATEGORY_K7_COMPLEX"),
+    "HOME_LOADING_WORKOUTS" : MessageLookupByLibrary.simpleMessage("HOME_LOADING_WORKOUTS"),
     "HOME_NO_WORKOUTS" : MessageLookupByLibrary.simpleMessage("HOME_NO_WORKOUTS"),
     "HOME_UNREGISTERED_SUBTITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_SUBTITLE"),
     "HOME_UNREGISTERED_TITLE" : MessageLookupByLibrary.simpleMessage("HOME_UNREGISTERED_TITLE"),
+    "WORKOUT_ADD_EXERCISE" : MessageLookupByLibrary.simpleMessage("WORKOUT_ADD_EXERCISE"),
+    "WORKOUT_DATE_LABEL" : MessageLookupByLibrary.simpleMessage("WORKOUT_DATE_LABEL"),
     "WORKOUT_REPETITIONS" : MessageLookupByLibrary.simpleMessage("WORKOUT_REPETITIONS"),
     "WORKOUT_SELECT_EXERCISE" : MessageLookupByLibrary.simpleMessage("WORKOUT_SELECT_EXERCISE"),
     "WORKOUT_SET_LIST_ADD_10KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_SET_LIST_ADD_10KG"),
     "WORKOUT_SET_LIST_ADD_2_5KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_SET_LIST_ADD_2_5KG"),
     "WORKOUT_SET_LIST_ADD_5KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_SET_LIST_ADD_5KG"),
+    "WORKOUT_TITLE_LABEL" : MessageLookupByLibrary.simpleMessage("WORKOUT_TITLE_LABEL"),
     "WORKOUT_WEIGHT_KG" : MessageLookupByLibrary.simpleMessage("WORKOUT_WEIGHT_KG")
   };
 }

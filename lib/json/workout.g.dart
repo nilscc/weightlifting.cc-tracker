@@ -9,6 +9,7 @@ part of 'workout.dart';
 Workout _$WorkoutFromJson(Map<String, dynamic> json) {
   return Workout(
     json['date'] == null ? null : DateTime.parse(json['date'] as String),
+    json['hasTime'] as bool ?? false,
     json['title'] as String,
     (json['exercises'] as List)
         ?.map((e) =>
@@ -19,8 +20,9 @@ Workout _$WorkoutFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$WorkoutToJson(Workout instance) => <String, dynamic>{
       'date': instance.date?.toIso8601String(),
+      'hasTime': instance.hasTime,
       'title': instance.title,
-      'exercises': instance.exercises,
+      'exercises': instance.exercises?.map((e) => e?.toJson())?.toList(),
     };
 
 Exercise _$ExerciseFromJson(Map<String, dynamic> json) {
@@ -36,17 +38,17 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'sets': instance.sets,
+      'sets': instance.sets?.map((e) => e?.toJson())?.toList(),
     };
 
 Set _$SetFromJson(Map<String, dynamic> json) {
   return Set(
-    (json['weight_kg'] as num)?.toDouble(),
+    (json['weightKg'] as num)?.toDouble(),
     json['repetitions'] as int,
   );
 }
 
 Map<String, dynamic> _$SetToJson(Set instance) => <String, dynamic>{
-      'weight_kg': instance.weightKg,
+      'weightKg': instance.weightKg,
       'repetitions': instance.repetitions,
     };

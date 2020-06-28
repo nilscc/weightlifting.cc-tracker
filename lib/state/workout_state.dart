@@ -6,8 +6,15 @@ import 'package:weightlifting.cc/state/exercise_state.dart';
 
 class WorkoutState extends ChangeNotifier {
   /// Get workout state of current context (provided via "ChangeNotifierProvider")
-  static WorkoutState of(BuildContext context) =>
-      Provider.of<WorkoutState>(context, listen: false);
+  static WorkoutState of(BuildContext context, {bool listen: false}) =>
+      Provider.of<WorkoutState>(context, listen: listen);
+
+  /*
+   * File storage data
+   *
+   */
+
+  String filePath;
 
   /*
    * Internal meta data, e.g. modified status
@@ -34,20 +41,58 @@ class WorkoutState extends ChangeNotifier {
    */
 
   String _title;
+
+  String get title => _title;
+  set title(String title) {
+    if (_title != title) {
+      _title = title;
+      _isModified = true;
+
+      notifyListeners();
+    }
+  }
+
   DateTime _dateTime = DateTime.now();
 
   DateTime get dateTime => _dateTime;
   set dateTime(DateTime dateTime) {
-    _dateTime = dateTime;
-    _isModified = true;
-    notifyListeners();
+    if (_dateTime != dateTime) {
+      _dateTime = dateTime;
+      _isModified = true;
+
+      notifyListeners();
+    }
   }
 
-  String get title => _title;
-  set title(String title) {
-    _title = title;
-    _isModified = true;
-    notifyListeners();
+  // time is a virtual getter/setter without associated member (part of _dateTime)
+  TimeOfDay get time => TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
+  set time(TimeOfDay time) {
+    if (this.time != time) {
+      if (time != null) {
+        _dateTime = DateTime(
+            _dateTime.year, _dateTime.month, _dateTime.day, time.hour,
+            time.minute);
+        _hasTime = true;
+      }
+      else
+        _hasTime = false;
+
+      _isModified = true;
+
+      notifyListeners();
+    }
+  }
+
+  bool _hasTime = false;
+
+  bool get hasTime => _hasTime;
+  set hasTime(bool hasTime) {
+    if (_hasTime != hasTime) {
+      _hasTime = hasTime;
+      _isModified = true;
+
+      notifyListeners();
+    }
   }
 
   /*
@@ -68,17 +113,17 @@ class WorkoutState extends ChangeNotifier {
   }
 
   // Keep track of currently active, i.e. modifiable, set
-  int _activeExercise = 0;
+  int _activeExerciseId = 0;
 
   /// Get ID of active exercise
-  int get activeExerciseId => _activeExercise;
+  int get activeExerciseId => _activeExerciseId;
 
   /// Get state of active exercise
   ExerciseState get activeExercise => _exercises[activeExerciseId];
 
   /// Update active set and notify any listeners.
   set activeExerciseId(int idx) {
-    _activeExercise = idx;
+    _activeExerciseId = idx;
     notifyListeners();
   }
 
@@ -86,5 +131,8 @@ class WorkoutState extends ChangeNotifier {
   /// all exercises.
   bool get activeIsLast => activeExerciseId == (exercises.length - 1);
 
-
+  void addExercise() {
+    _exercises.add(ExerciseState());
+    notifyListeners();
+  }
 }
