@@ -16,8 +16,7 @@ class ExerciseListWidget extends StatelessWidget {
   WorkoutState get _workout => WorkoutState.of(context);
 
   // localization messages
-  WorkoutMessages get loc => WorkoutMessages.of(context);
-  DialogMessages get _dia => DialogMessages.of(context);
+  WorkoutMessages get _workoutMessages => WorkoutMessages.of(context);
 
   @override
   Widget build(BuildContext context) => Column(
@@ -31,7 +30,7 @@ class ExerciseListWidget extends StatelessWidget {
               ButtonBar(
                 children: <Widget>[
                   RaisedButton(
-                    child: Text(loc.addExercise),
+                    child: Text(_workoutMessages.addExercise),
                     onPressed: _stepContinue,
                   )
                 ],
@@ -41,27 +40,6 @@ class ExerciseListWidget extends StatelessWidget {
 
   void _stepContinue() {
     _workout.addExercise();
-  }
-
-  void _stepCancel() async {
-    // get exercise of current step
-    final ExerciseState exercise = _workout.activeExercise;
-
-    // figure out in which part of the step we are
-
-    // check, if we are in exercise selection mode (exercise ID is not set)
-    if (!exercise.hasExerciseId)
-      exercise.resetPreviousExerciseId();
-    else
-      _discardActiveExercise();
-  }
-
-  void _discardActiveExercise() async {
-    final bool discard = await _dia.showDiscardDialog(context);
-
-    print('Discard active exercise = $discard');
-
-    // TODO: remove active exercise
   }
 
   Widget _renderExercise(int index, ExerciseState e) =>

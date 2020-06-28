@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
@@ -80,7 +75,7 @@ class HomePage extends StatelessWidget {
   Widget _addButton(BuildContext context) => FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: () async {
-        final Workout w = await Navigator.push(context, _newWorkoutRoute());
+        await Navigator.push(context, _newWorkoutRoute());
         _workouts.load();
       });
 

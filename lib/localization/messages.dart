@@ -176,5 +176,6 @@ class ExerciseMessages {
       if (_categoryExercises[c].contains(exerciseId))
         return c;
     }
+    return null;
   }
 }

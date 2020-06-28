@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 
