@@ -47,6 +47,17 @@ class Workouts extends ChangeNotifier {
     // done => notify all
     notifyListeners();
   }
+
+  void delete(final String filePath) async {
+    assert(basename(filePath).startsWith('workout_'));
+    assert(basename(filePath).endsWith('.json'));
+
+    // delete file
+    File(filePath).delete();
+
+    // reload
+    load();
+  }
 }
 
 class WorkoutList extends StatelessWidget {
@@ -54,6 +65,7 @@ class WorkoutList extends StatelessWidget {
 
   WorkoutList(this.context) : assert(context != null);
 
+  DialogMessages get _dialogMessages => DialogMessages.of(context);
   HomeMessages get loc => HomeMessages.of(context);
   ExerciseMessages get _em => ExerciseMessages.of(context);
 
@@ -83,6 +95,8 @@ class WorkoutList extends StatelessWidget {
     final String title = w.title != null ? ' - ${w.title}' : '';
 
     return ListTile(
+
+      // load workout on tap
       onTap: () async {
         await Navigator.push(
             context,
@@ -91,6 +105,14 @@ class WorkoutList extends StatelessWidget {
                     locked: false, workout: w, filePath: filePath)));
         _stateRO.load();
       },
+
+      // delete workout on long press
+      onLongPress: () async {
+        final bool discard = await _dialogMessages.showDiscardDialog(context);
+        if (discard) _stateRO.delete(filePath);
+      },
+
+      // layout
       leading: Icon(
         Icons.check,
         color: Colors.green,
