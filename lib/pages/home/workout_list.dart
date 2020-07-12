@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout.dart';
-import 'package:weightlifting.cc/state/workout_state.dart';
 
 class Workouts extends ChangeNotifier {
   final List<Tuple2<String, Workout>> workouts = [];

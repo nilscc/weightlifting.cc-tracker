@@ -48,7 +48,7 @@ class ExerciseListWidget extends StatelessWidget {
         builder: (context, _) => Card(
           child: Column(
             children: <Widget>[
-              ExerciseTitleWidget(),
+              ExerciseTitleWidget(index),
               Padding(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
                 child: ExerciseWidget(context),

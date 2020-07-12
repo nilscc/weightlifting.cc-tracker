@@ -147,4 +147,18 @@ class WorkoutState extends ChangeNotifier {
     _exercises.add(ExerciseState());
     notifyListeners();
   }
+
+  void removeExerciseId(int idx) {
+    _exercises.removeAt(idx);
+
+    // update active exercise selection
+    if (_activeExerciseId == idx)
+      _activeExerciseId = null;
+    else if (_activeExerciseId > idx)
+      _activeExerciseId--;
+
+    _isModified = true;
+
+    notifyListeners();
+  }
 }

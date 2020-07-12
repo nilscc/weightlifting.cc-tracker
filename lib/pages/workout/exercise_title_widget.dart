@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
+import 'package:weightlifting.cc/state/workout_state.dart';
 
 class ExerciseTitleWidget extends StatefulWidget {
+  final int exerciseId;
+
+  ExerciseTitleWidget(this.exerciseId);
+
   @override
   State<StatefulWidget> createState() => _State();
 }
@@ -21,6 +26,7 @@ class _State extends State<ExerciseTitleWidget> {
   ExerciseState get _state => ExerciseState.of(context);
 
   /// Localization messages
+  DialogMessages get _dialogMessages => DialogMessages.of(context);
   WorkoutMessages get _wor => WorkoutMessages.of(context);
   ExerciseMessages get _exc => ExerciseMessages.of(context);
 
@@ -52,10 +58,18 @@ class _State extends State<ExerciseTitleWidget> {
       _state.resetPreviousExerciseId();
   }
 
+  void _onLongPress() async {
+    final bool discard = await _dialogMessages.showDiscardDialog(context);
+
+    if (discard)
+      WorkoutState.of(context).removeExerciseId(this.widget.exerciseId);
+  }
+
   // Build main title
   Widget _buildExerciseTitle() => ListTile(
         title: Text(_title),
         subtitle: _subtitle,
         onTap: _onTap,
+        onLongPress: _onLongPress,
       );
 }
