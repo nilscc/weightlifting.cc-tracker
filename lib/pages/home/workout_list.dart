@@ -1,17 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:tuple/tuple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
 import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
+import 'package:weightlifting.cc/pages/workout.dart';
+import 'package:weightlifting.cc/state/workout_state.dart';
 
 class Workouts extends ChangeNotifier {
-  final List<Workout> workouts = [];
+  final List<Tuple2<String, Workout>> workouts = [];
 
   Future<void> load() async {
     // make sure list is empty
@@ -33,13 +37,13 @@ class Workouts extends ChangeNotifier {
           final Map x = jsonDecode(content);
           final Workout json = Workout.fromJson(x);
 
-          workouts.add(json);
+          workouts.add(Tuple2(f.path, json));
         }
       }
     }
 
     // sort by date (reversed)
-    workouts.sort((a,b) => b.date.compareTo(a.date));
+    workouts.sort((a, b) => b.item2.date.compareTo(a.item2.date));
 
     // done => notify all
     notifyListeners();
@@ -55,6 +59,7 @@ class WorkoutList extends StatelessWidget {
   ExerciseMessages get _em => ExerciseMessages.of(context);
 
   Workouts get _state => Provider.of<Workouts>(context, listen: true);
+  Workouts get _stateRO => Provider.of<Workouts>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {
@@ -64,23 +69,35 @@ class WorkoutList extends StatelessWidget {
       );
     else
       return Column(
-        children: _state.workouts.map((w) => _workout(w)).toList(),
+        children:
+            _state.workouts.map((w) => _workout(w.item1, w.item2)).toList(),
       );
   }
 
-  Widget _workout(Workout w) {
+  Widget _workout(final String filePath, final Workout w) {
+    final List<String> exerciseNames =
+        w.exercises.map((e) => _em.exercise(e.id)).toList();
 
-    final List<String> exerciseNames = w.exercises.map((e) => _em.exercise(e.id)).toList();
-
-    final String date = w.hasTime ? DateFormat.yMd().add_jm().format(w.date) : DateFormat.yMd().format(w.date);
+    final String date = w.hasTime
+        ? DateFormat.yMd().add_jm().format(w.date)
+        : DateFormat.yMd().format(w.date);
     final String title = w.title != null ? ' - ${w.title}' : '';
 
     return ListTile(
-      onTap: () {},
-      leading: Icon(Icons.check, color: Colors.green,),
+      onTap: () async {
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => WorkoutPage(context,
+                    locked: false, workout: w, filePath: filePath)));
+        _stateRO.load();
+      },
+      leading: Icon(
+        Icons.check,
+        color: Colors.green,
+      ),
       title: Text('$date$title'),
-      subtitle: Text(
-          '${exerciseNames.join("\n")}'),
+      subtitle: Text('${exerciseNames.join("\n")}'),
     );
   }
 }

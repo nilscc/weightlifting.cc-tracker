@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 
 import 'package:weightlifting.cc/pages/workout/exercise_list_widget.dart';
@@ -13,10 +14,14 @@ class WorkoutPage extends StatelessWidget {
 
   final bool locked;
 
-  WorkoutPage(this.context, {this.locked: true});
+  WorkoutPage(this.context,
+      {this.locked: true, final String filePath, final Workout workout})
+      : _workout = (workout == null || filePath == null)
+            ? WorkoutState()
+            : WorkoutState.read(filePath, workout);
 
   // state
-  final WorkoutState _workout = WorkoutState();
+  final WorkoutState _workout;
 
   // localization
   DialogMessages get _dia => DialogMessages.of(context);
@@ -63,15 +68,15 @@ class WorkoutPage extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) => WillPopScope(
-            onWillPop: () => _canPop(context),
-            child: ChangeNotifierProvider.value(
-              value: _workout,
-              builder: (context, _) => ListView(
-                children: <Widget>[
-                  WorkoutDetailsWidget(context),
-                  ExerciseListWidget(context),
-                ],
-              ),
-            ),
-          );
+        onWillPop: () => _canPop(context),
+        child: ChangeNotifierProvider.value(
+          value: _workout,
+          builder: (context, _) => ListView(
+            children: <Widget>[
+              WorkoutDetailsWidget(context),
+              ExerciseListWidget(context),
+            ],
+          ),
+        ),
+      );
 }

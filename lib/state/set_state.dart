@@ -2,10 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/json/workout.dart' as json;
 
 class SetState extends ChangeNotifier {
 
   SetState(this._weight, this._reps);
+
+  SetState.read(final json.Set set)
+    : _reps = set.repetitions
+    , _weight = set.weightKg;
 
   /// Static provider method
   static SetState of(BuildContext context, {bool listen: false}) =>

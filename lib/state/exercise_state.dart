@@ -2,9 +2,19 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
 class ExerciseState extends ChangeNotifier {
+
+  ExerciseState()
+    : _sets = [SetState(20.0, 1)];
+
+  ExerciseState.read(final Exercise exercise)
+    : _exerciseId = exercise.id
+    , _activeSetId = null
+    , _sets = exercise.sets.map((s) => SetState.read(s)).toList();
+
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
   static ExerciseState of(BuildContext context, {bool listen: false}) =>
       Provider.of<ExerciseState>(context, listen: listen);
@@ -73,7 +83,7 @@ class ExerciseState extends ChangeNotifier {
    */
 
   // Set list should by default contain one (the first) set
-  final List<SetState> _sets = [SetState(20.0, 1)];
+  final List<SetState> _sets;
 
   UnmodifiableListView<SetState> get sets =>
       UnmodifiableListView<SetState>(_sets);

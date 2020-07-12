@@ -2,9 +2,21 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 
 class WorkoutState extends ChangeNotifier {
+
+  WorkoutState()
+    : _exercises = [ExerciseState()];
+
+  WorkoutState.read(final String filePath, final Workout workout)
+    : filePath = filePath
+    , _title = workout.title
+    , _hasTime = workout.hasTime
+    , _dateTime = workout.date
+    , _exercises = workout.exercises.map((e) => ExerciseState.read(e)).toList();
+
   /// Get workout state of current context (provided via "ChangeNotifierProvider")
   static WorkoutState of(BuildContext context, {bool listen: false}) =>
       Provider.of<WorkoutState>(context, listen: listen);
@@ -100,7 +112,7 @@ class WorkoutState extends ChangeNotifier {
    *
    */
 
-  final List<ExerciseState> _exercises = [ExerciseState()];
+  final List<ExerciseState> _exercises;
 
   UnmodifiableListView<ExerciseState> get exercises =>
       UnmodifiableListView(_exercises);
