@@ -62,8 +62,8 @@ class WorkoutDetailsWidget extends StatelessWidget {
                   }
                 },
               ),
-              TextField(
-                controller: TextEditingController(text: _stateRO.title),
+              TextFormField(
+                initialValue: _stateRO.title,
                 onChanged: (String value) => _stateRO.title = value,
                 decoration: InputDecoration(
                   labelText: _message.workoutTitleLabel,
