@@ -23,7 +23,8 @@ class _State extends State<SetWidget> {
 
   _State(this.context,
       {this.increment: 2.5, this.divisions: 8, this.minValue: 20.0})
-      : _sliderMin = max(minValue, SetState.of(context).weight - 0.5 * divisions * increment);
+      : _sliderMin = max(minValue,
+            SetState.of(context).weight - 0.5 * divisions * increment);
 
   // read-only access to set state
   SetState get _state => SetState.of(context);
@@ -37,45 +38,58 @@ class _State extends State<SetWidget> {
   @override
   Widget build(BuildContext context) => Column(
         children: <Widget>[
-          _buildWeightControls(),
-          _buildRepetitionControls(),
-        ],
-      );
-
-  Widget _buildWeightControls() => Row(
-        children: <Widget>[
-          Text("${_msg.weightKg}:"),
-          Expanded(
-            child: Slider(
-              value: SetState.of(context, listen: true).weight,
-              min: _sliderMin,
-              max: _sliderMax,
-              divisions: divisions,
-              onChanged: (value) {
-                _state.weight = value;
-              },
-              onChangeEnd: (value) => setState(() {
-                _sliderMin = max(minValue, value - 0.5 * divisions * increment);
-              }),
-            ),
+          Row(
+            children: <Widget>[
+              Container(
+                child: Text("${_msg.weightKg}:"),
+                width: 110,
+              ),
+              _weightSlider(),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                child: Text("${_msg.repetitions}:"),
+                width: 110,
+              ),
+              _repetitionControls(),
+            ],
           ),
         ],
       );
 
-  Widget _buildRepetitionControls() => Row(
-        children: <Widget>[
-          Text("${_msg.repetitions}:"),
-          IconButton(
-            onPressed: _state.incrementReps,
-            icon: Icon(
-              Icons.add_circle_outline,
-              color: Colors.grey,
+  Widget _weightSlider() => Expanded(
+        child: Slider(
+          value: SetState.of(context, listen: true).weight,
+          min: _sliderMin,
+          max: _sliderMax,
+          divisions: divisions,
+          onChanged: (value) {
+            _state.weight = value;
+          },
+          onChangeEnd: (value) => setState(() {
+            _sliderMin = max(minValue, value - 0.5 * divisions * increment);
+          }),
+        ),
+      );
+
+  Widget _repetitionControls() => Expanded(
+        child: ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              onPressed: _state.incrementReps,
+              icon: Icon(
+                Icons.add_circle_outline,
+                color: Colors.grey,
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: _state.decrementReps,
-            icon: Icon(Icons.remove_circle_outline, color: Colors.grey),
-          ),
-        ],
+            IconButton(
+              onPressed: _state.decrementReps,
+              icon: Icon(Icons.remove_circle_outline, color: Colors.grey),
+            ),
+          ],
+        ),
       );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout/set_title_widget.dart';
@@ -21,7 +22,17 @@ class SetListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        children: _buildSetList() + [ButtonBar(children: _buildSetListControls())],
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+              children: _buildSetList(),
+              direction: Axis.horizontal,
+              runSpacing: 15,
+              alignment: WrapAlignment.start,
+            ),
+          ),
+          ButtonBar(children: _buildSetListControls())],
       );
 
   List<Widget> _buildSetListControls() => [
@@ -82,7 +93,7 @@ class SetListWidget extends StatelessWidget {
         onLongPress: () => _deleteSet(index),
         title: ChangeNotifierProvider.value(
           value: set,
-          builder: (context, _) => SetTitleWidget(context),
+          builder: (context, _) => SetTitleWidget(context, active: true),
         ),
         subtitle: ChangeNotifierProvider.value(
           value: set,
@@ -90,10 +101,10 @@ class SetListWidget extends StatelessWidget {
         ),
       );
 
-  Widget _inactiveSet(int index, SetState set) => ListTile(
-        onTap: () => _tapSet(index),
+  Widget _inactiveSet(int index, SetState set) => FlatButton(
+        onPressed: () => _tapSet(index),
         onLongPress: () => _deleteSet(index),
-        title: ChangeNotifierProvider.value(
+        child: ChangeNotifierProvider.value(
           value: set,
           builder: (context, _) => SetTitleWidget(context),
         ),
