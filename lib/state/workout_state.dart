@@ -44,7 +44,7 @@ class WorkoutState extends ChangeNotifier {
     _isModified = false;
     _exercises.forEach((e) => e.unsetIsModified());
 
-    // No need to modify listeners...
+    notifyListeners();
   }
 
   /*

@@ -33,18 +33,21 @@ class SaveButtonWidget extends StatelessWidget {
       }
 
       // add exercise to workout exercise list
-      exercises.add(json.Exercise(e.exerciseId, _exerciseMessages.exercise(e.exerciseId), sets));
+      exercises.add(json.Exercise(
+          e.exerciseId, _exerciseMessages.exercise(e.exerciseId), sets));
     }
 
     // build final workout
-    json.Workout w = json.Workout(workout.dateTime, workout.hasTime, workout.title, exercises);
+    json.Workout w = json.Workout(
+        workout.dateTime, workout.hasTime, workout.title, exercises);
 
     // pick new file path if it doesn't exist yet
     if (workout.filePath == null) {
       // get application directory
       Directory appDocDirectory = await getApplicationDocumentsDirectory();
       // create new file
-      workout.filePath = '${appDocDirectory.path}/workout_${DateTime.now().hashCode}.json';
+      workout.filePath =
+          '${appDocDirectory.path}/workout_${DateTime.now().hashCode}.json';
     }
 
     print('Saving workout to: ${workout.filePath}');
@@ -60,7 +63,9 @@ class SaveButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) => FlatButton(
         child: Icon(
           Icons.save,
-          color: workout.isModified ? Colors.white70 : Theme.of(context).disabledColor,
+          color: WorkoutState.of(context, listen: true).isModified
+              ? Colors.white70
+              : Theme.of(context).disabledColor,
         ),
         onPressed: _save,
       );
