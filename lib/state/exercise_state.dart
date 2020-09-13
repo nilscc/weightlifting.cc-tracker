@@ -3,38 +3,33 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart';
+import 'package:weightlifting.cc/state/modified_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
 class ExerciseState extends ChangeNotifier {
 
-  ExerciseState()
-    : _sets = [SetState(20.0, 1)];
+  final BuildContext context;
 
-  ExerciseState.read(final Exercise exercise)
+  ExerciseState(this.context)
+    : _sets = [SetState(context, 20.0, 1)];
+
+  ExerciseState.read(this.context, final Exercise exercise)
     : _exerciseId = exercise.id
     , _activeSetId = null
-    , _sets = exercise.sets.map((s) => SetState.read(s)).toList();
+    , _sets = exercise.sets.map((s) => SetState.read(context, s)).toList();
 
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
   static ExerciseState of(BuildContext context, {bool listen: false}) =>
       Provider.of<ExerciseState>(context, listen: listen);
 
   /*
-   * Internal meta data, e.g. modified status
+   * Modified state
    *
    */
 
-  bool _isModified = false;
+  ModifiedState get _modifiedState => ModifiedState.of(context);
 
-  /// Check if exercise (or any of its sets) has been modified
-  bool get isModified => _isModified || _sets.any((set) => set.isModified);
-
-  /// Unset modified state, e.g. after saving exercise (and all of its sets!)
-  /// to JSON files.
-  void unsetIsModified() {
-    _isModified = false;
-    _sets.forEach((set) => set.unsetIsModified());
-  }
+  set _modified(final bool newValue) => _modifiedState.modified = newValue;
 
   /*
    * Exercise Details (type, comments, ...)
@@ -50,7 +45,7 @@ class ExerciseState extends ChangeNotifier {
 
     if (id != _exerciseId) {
       _exerciseId = id;
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -62,7 +57,7 @@ class ExerciseState extends ChangeNotifier {
     if (_exerciseId != null) {
       _previousExerciseId = _exerciseId;
       _exerciseId = null;
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -71,7 +66,7 @@ class ExerciseState extends ChangeNotifier {
   void resetPreviousExerciseId() {
     if (_previousExerciseId != null) {
       _exerciseId = _previousExerciseId;
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -102,8 +97,12 @@ class ExerciseState extends ChangeNotifier {
   SetState get activeSet => _sets[_activeSetId];
 
   void addSet(SetState setState) {
-    _sets.add(setState);
-    _isModified = true;
+    if (activeSetId != null)
+      _sets.insert(activeSetId + 1, setState);
+    else
+      _sets.add(setState);
+
+    _modified = true;
 
     notifyListeners();
   }
@@ -115,7 +114,7 @@ class ExerciseState extends ChangeNotifier {
 
     // check if last element was removed
     if (_sets.isEmpty) {
-      _sets.add(SetState(20.0, 1));
+      _sets.add(SetState(context, 20.0, 1));
       _activeSetId = 0;
     }
     else if (_activeSetId == setId)
@@ -123,7 +122,7 @@ class ExerciseState extends ChangeNotifier {
     else if (_activeSetId > setId)
       _activeSetId--;
 
-    _isModified = true;
+    _modified = true;
 
     notifyListeners();
   }

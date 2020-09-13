@@ -3,12 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart' as json;
+import 'package:weightlifting.cc/state/modified_state.dart';
 
 class SetState extends ChangeNotifier {
 
-  SetState(this._weight, this._reps);
+  final BuildContext context;
 
-  SetState.read(final json.Set set)
+  SetState(this.context, this._weight, this._reps);
+
+  SetState.read(this.context, final json.Set set)
     : _reps = set.repetitions
     , _weight = set.weightKg;
 
@@ -17,16 +20,13 @@ class SetState extends ChangeNotifier {
       Provider.of<SetState>(context, listen: listen);
 
   /*
-   * Modified status
+   * Modified state
    *
    */
 
-  bool _isModified = false;
+  ModifiedState get _modifiedState => ModifiedState.of(context);
 
-  /// Get current modified status
-  bool get isModified => _isModified;
-
-  void unsetIsModified() => _isModified = false;
+  set _modified(final bool newValue) => _modifiedState.modified = newValue;
 
   /*
    * Set details (weight, reps...)
@@ -41,7 +41,7 @@ class SetState extends ChangeNotifier {
     assert(weight >= 0);
 
     _weight = weight;
-    _isModified = true;
+    _modified = true;
 
     notifyListeners();
   }
@@ -54,7 +54,7 @@ class SetState extends ChangeNotifier {
     assert(reps >= 0);
 
     _reps = reps;
-    _isModified = true;
+    _modified = true;
 
     notifyListeners();
   }

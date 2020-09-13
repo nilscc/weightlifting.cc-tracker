@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:weightlifting.cc/localization/messages.dart';
+import 'package:weightlifting.cc/pages/workout/set_controls_widget.dart';
 import 'package:weightlifting.cc/pages/workout/set_title_widget.dart';
-import 'package:weightlifting.cc/pages/workout/set_widget.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
@@ -16,105 +14,55 @@ class SetListWidget extends StatelessWidget {
   // read-only state access to current exercise
   ExerciseState get _exercise => ExerciseState.of(context);
 
-  // localization messages
-  DialogMessages get _dialogMessages => DialogMessages.of(context);
-  WorkoutMessages get _workoutMessages => WorkoutMessages.of(context);
+  int get _preLength => _exercise.activeSetId == null
+      ? _exercise.sets.length
+      : _exercise.activeSetId + 1;
+
+  Iterable<SetState> _preSets() => _exercise.sets.getRange(0, _preLength);
+
+  Iterable<SetState> _postSets() =>
+      _exercise.sets.getRange(_preLength, _exercise.sets.length);
 
   @override
   Widget build(BuildContext context) => Column(
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Wrap(
-              children: _buildSetList(),
-              direction: Axis.horizontal,
-              runSpacing: 15,
-              alignment: WrapAlignment.start,
-            ),
-          ),
-          ButtonBar(children: _buildSetListControls())],
+        children: [_buildSets(_preSets())] +
+            _controls() +
+            [_buildSets(_postSets(), indexOffset: _preLength)],
       );
 
-  List<Widget> _buildSetListControls() => [
-        RaisedButton(
-          child: Icon(Icons.content_copy),
-          onPressed: _copyLastSet,
-        ),
-        FlatButton(
-          child: Text(_workoutMessages.add2_5kg),
-          onPressed: () => _copyLastSet(weightIncrement: 2.5),
-        ),
-        FlatButton(
-          child: Text(_workoutMessages.add5kg),
-          onPressed: () => _copyLastSet(weightIncrement: 5),
-        ),
-        FlatButton(
-          child: Text(_workoutMessages.add10kg),
-          onPressed: () => _copyLastSet(weightIncrement: 10),
+  List<Widget> _controls() {
+    if (_exercise.activeSetId == null)
+      return [];
+    else
+      return [
+        ChangeNotifierProvider.value(
+          value: _exercise.sets[_exercise.activeSetId],
+          builder: (context, _) => SetControlsWidget(context),
         ),
       ];
-
-  void _copyLastSet({double weightIncrement = 0.0, int repIncrement = 0}) {
-    // get last element
-    final SetState lastSet = _exercise.sets.last;
-
-    // append new set state
-    _exercise.addSet(SetState(
-        lastSet.weight + weightIncrement, lastSet.reps + repIncrement));
-
-    // set last set as active
-    _setActiveSet(_exercise.sets.length - 1);
   }
 
-  void _deleteSet(int setId) async {
-    final bool discard = await _dialogMessages.showDiscardDialog(context);
-
-    if (discard) _exercise.deleteSet(setId);
-  }
-
-  List<Widget> _buildSetList() => _exercise.sets
-      .asMap()
-      .map((idx, set) => MapEntry(idx, _buildSet(idx, set)))
-      .values
-      .toList();
-
-  Widget _buildSet(int index, SetState set) {
-    // check if current set is active
-    final active = _exercise.activeSetId == index;
-
-    if (active)
-      return _activeSet(index, set);
-    else
-      return _inactiveSet(index, set);
-  }
-
-  Widget _activeSet(int index, SetState set) => ListTile(
-        onTap: () => _tapSet(index),
-        onLongPress: () => _deleteSet(index),
-        title: ChangeNotifierProvider.value(
-          value: set,
-          builder: (context, _) => SetTitleWidget(context, active: true),
-        ),
-        subtitle: ChangeNotifierProvider.value(
-          value: set,
-          builder: (context, _) => SetWidget(context),
+  Widget _buildSets(Iterable<SetState> setList, {int indexOffset: 0}) => Align(
+        alignment: Alignment.topLeft,
+        child: Wrap(
+          children: _buildSetsList(setList, indexOffset),
+          direction: Axis.horizontal,
+          runSpacing: 15,
+          alignment: WrapAlignment.start,
         ),
       );
 
-  Widget _inactiveSet(int index, SetState set) => FlatButton(
-        onPressed: () => _tapSet(index),
-        onLongPress: () => _deleteSet(index),
-        child: ChangeNotifierProvider.value(
-          value: set,
-          builder: (context, _) => SetTitleWidget(context),
-        ),
-      );
-
-  void _setActiveSet(int setIndex) {
-    _exercise.activeSetId = setIndex;
-  }
-
-  void _tapSet(int setIndex) {
-    _setActiveSet(_exercise.activeSetId == setIndex ? null : setIndex);
-  }
+  List<Widget> _buildSetsList(Iterable<SetState> setList, int indexOffset) =>
+      setList
+          .toList()
+          .asMap()
+          .map((idx, set) => MapEntry(
+              idx,
+              ChangeNotifierProvider.value(
+                value: set,
+                builder: (context, _) =>
+                    SetTitleWidget(context, indexOffset + idx),
+              )))
+          .values
+          .toList();
 }

@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:weightlifting.cc/json/workout.dart' as json;
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
+import 'package:weightlifting.cc/state/modified_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
 import 'package:weightlifting.cc/state/workout_state.dart';
@@ -17,6 +18,7 @@ class SaveButtonWidget extends StatelessWidget {
   SaveButtonWidget(this.context);
 
   // Change notifier getters
+  ModifiedState get _modifiedState => ModifiedState.of(context);
   WorkoutState get workout => WorkoutState.of(context);
 
   ExerciseMessages get _exerciseMessages => ExerciseMessages.of(context);
@@ -56,14 +58,14 @@ class SaveButtonWidget extends StatelessWidget {
     print(encoded);
     new File(workout.filePath).writeAsString(encoded);
 
-    workout.unsetIsModified();
+    _modifiedState.modified = false;
   }
 
   @override
   Widget build(BuildContext context) => FlatButton(
         child: Icon(
           Icons.save,
-          color: WorkoutState.of(context, listen: true).isModified
+          color: ModifiedState.of(context, listen: true).modified
               ? Colors.white70
               : Theme.of(context).disabledColor,
         ),

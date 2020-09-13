@@ -4,18 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
+import 'package:weightlifting.cc/state/modified_state.dart';
 
 class WorkoutState extends ChangeNotifier {
 
-  WorkoutState()
-    : _exercises = [ExerciseState()];
+  final BuildContext context;
 
-  WorkoutState.read(final String filePath, final Workout workout)
+  WorkoutState(this.context)
+    : _exercises = [ExerciseState(context)];
+
+  WorkoutState.read(this.context, final String filePath, final Workout workout)
     : filePath = filePath
     , _title = workout.title
     , _hasTime = workout.hasTime
     , _dateTime = workout.date
-    , _exercises = workout.exercises.map((e) => ExerciseState.read(e)).toList();
+    , _exercises = workout.exercises.map((e) => ExerciseState.read(context, e)).toList();
 
   /// Get workout state of current context (provided via "ChangeNotifierProvider")
   static WorkoutState of(BuildContext context, {bool listen: false}) =>
@@ -33,19 +36,9 @@ class WorkoutState extends ChangeNotifier {
    *
    */
 
-  // Keep modified status protected as private member
-  bool _isModified = false;
+  ModifiedState get _modifiedState => ModifiedState.of(context);
 
-  /// Workout is modified if its details or any of its exercises are modified.
-  bool get isModified => _isModified || _exercises.any((exc) => exc.isModified);
-
-  /// Unset modified status, e.g. after saving all data to JSON files.
-  void unsetIsModified() {
-    _isModified = false;
-    _exercises.forEach((e) => e.unsetIsModified());
-
-    notifyListeners();
-  }
+  set _modified(final bool newValue) => _modifiedState.modified = newValue;
 
   /*
    * Details (date, time, description...)
@@ -58,7 +51,7 @@ class WorkoutState extends ChangeNotifier {
   set title(String title) {
     if (_title != title) {
       _title = title;
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -70,7 +63,7 @@ class WorkoutState extends ChangeNotifier {
   set dateTime(DateTime dateTime) {
     if (_dateTime != dateTime) {
       _dateTime = dateTime;
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -89,7 +82,7 @@ class WorkoutState extends ChangeNotifier {
       else
         _hasTime = false;
 
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -101,7 +94,7 @@ class WorkoutState extends ChangeNotifier {
   set hasTime(bool hasTime) {
     if (_hasTime != hasTime) {
       _hasTime = hasTime;
-      _isModified = true;
+      _modified = true;
 
       notifyListeners();
     }
@@ -119,8 +112,8 @@ class WorkoutState extends ChangeNotifier {
 
   /// Add new (empty) exercise
   void newExercise() {
-    _exercises.add(ExerciseState());
-    _isModified = true;
+    _exercises.add(ExerciseState(context));
+    _modified = true;
     notifyListeners();
   }
 
@@ -144,7 +137,7 @@ class WorkoutState extends ChangeNotifier {
   bool get activeIsLast => activeExerciseId == (exercises.length - 1);
 
   void addExercise() {
-    _exercises.add(ExerciseState());
+    _exercises.add(ExerciseState(context));
     notifyListeners();
   }
 
@@ -157,7 +150,7 @@ class WorkoutState extends ChangeNotifier {
     else if (_activeExerciseId > idx)
       _activeExerciseId--;
 
-    _isModified = true;
+    _modified = true;
 
     notifyListeners();
   }
