@@ -129,6 +129,12 @@ class WorkoutState extends ChangeNotifier {
   /// Update active set and notify any listeners.
   set activeExerciseId(int idx) {
     _activeExerciseId = idx;
+
+    for (int i = 0; i < exercises.length; ++i) {
+      if (i != idx)
+        exercises[i].activeSetId = null;
+    }
+
     notifyListeners();
   }
 

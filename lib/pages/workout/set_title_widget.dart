@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/state/exercise_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
+import 'package:weightlifting.cc/state/workout_state.dart';
 
 class SetTitleWidget extends StatelessWidget {
   final BuildContext context;
 
-  // exercise state
+  // states
+  WorkoutState get _workout => WorkoutState.of(context);
   ExerciseState get _exercise => ExerciseState.of(context);
 
   // localization messages
@@ -44,6 +46,7 @@ class SetTitleWidget extends StatelessWidget {
 
   void _toggleActive() {
     _exercise.activeSetId = _exercise.activeSetId == index ? null : index;
+    _workout.activeExerciseId = _workout.exercises.indexOf(_exercise);
   }
 
   void _deleteSet() async {

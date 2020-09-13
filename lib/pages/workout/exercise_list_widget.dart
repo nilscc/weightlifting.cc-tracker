@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
@@ -31,14 +30,14 @@ class ExerciseListWidget extends StatelessWidget {
                 children: <Widget>[
                   RaisedButton(
                     child: Text(_workoutMessages.addExercise),
-                    onPressed: _stepContinue,
+                    onPressed: _addExercise,
                   )
                 ],
               )
             ],
       );
 
-  void _stepContinue() {
+  void _addExercise() {
     _workout.addExercise();
   }
 
