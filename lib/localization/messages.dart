@@ -159,7 +159,7 @@ class ExerciseMessages {
   List<int> get categoryIds => _categoryIds.keys.toList();
   List<String> get categoryNames => _categoryIds.values.toList();
 
-  Map<int, List<int>> get _categoryExercises => {
+  static Map<int, List<int>> get _categoryExercises => {
         1: [1, 2, 3, 4, 5],
         2: [6, 7, 8, 9, 10, 11, 12],
         3: [13, 14],
@@ -168,6 +168,8 @@ class ExerciseMessages {
         6: [22, 23, 24, 25, 26],
         7: [27, 28, 29],
       };
+
+  static int get numCategories => _categoryExercises.keys.length;
 
   List<int> categoryExercises(int categoryId) => _categoryExercises[categoryId];
 
