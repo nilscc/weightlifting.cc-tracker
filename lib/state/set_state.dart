@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:weightlifting.cc/database/types.dart';
 import 'package:weightlifting.cc/json/workout.dart' as json;
 import 'package:weightlifting.cc/state/modified_state.dart';
 
@@ -20,6 +22,32 @@ class SetState extends ChangeNotifier {
       Provider.of<SetState>(context, listen: listen);
 
   /*
+   * File storage data
+   *
+   */
+
+  int _databaseId;
+  int get databaseId => _databaseId;
+
+  static Future<List<SetState>> queryByExerciseId(
+      BuildContext context, Database db, final int exerciseId) async {
+    List<SetState> sets = [];
+
+    for (Set s in await Set.queryByExerciseId(db, exerciseId)) {
+      SetState setState = SetState(context, 0.0, 0);
+
+      setState._databaseId = s.id;
+      setState._sets = s.sets;
+      setState._reps = s.reps;
+      setState._weight = s.weight;
+
+      sets.add(setState);
+    }
+
+    return sets;
+  }
+
+  /*
    * Modified state
    *
    */
@@ -34,32 +62,46 @@ class SetState extends ChangeNotifier {
    */
 
   double _weight = 0.0;
-
   double get weight => _weight;
 
   set weight(double weight) {
-    assert(weight >= 0);
+    assert(weight >= 0.0);
 
-    _weight = weight;
-    _modified = true;
+    if (_weight != weight) {
+      _weight = weight;
+      _modified = true;
 
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   int _reps = 0;
-
   int get reps => _reps;
 
   set reps(int reps) {
     assert(reps >= 0);
 
-    _reps = reps;
-    _modified = true;
+    if (_reps != reps) {
+      _reps = reps;
+      _modified = true;
 
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   void incrementReps() => reps += 1;
   void decrementReps() => reps = max(0, reps - 1);
 
+  int _sets = 1;
+  int get sets => _sets;
+  set sets(int sets) {
+    assert(sets >= 1);
+
+    if (_sets != sets) {
+      _sets = sets;
+      _modified = true;
+
+      notifyListeners();
+    }
+  }
 }

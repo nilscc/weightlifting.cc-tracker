@@ -2,7 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weightlifting.cc/json/workout.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:weightlifting.cc/database/types.dart';
 import 'package:weightlifting.cc/state/modified_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
@@ -11,14 +12,37 @@ class ExerciseState extends ChangeNotifier {
 
   ExerciseState(this.context) : _sets = [SetState(context, 20.0, 1)];
 
-  ExerciseState.read(this.context, final Exercise exercise)
-      : _exerciseId = exercise.id,
-        _activeSetId = null,
-        _sets = exercise.sets.map((s) => SetState.read(context, s)).toList();
-
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
   static ExerciseState of(BuildContext context, {bool listen: false}) =>
       Provider.of<ExerciseState>(context, listen: listen);
+
+  /*
+   * File storage data
+   *
+   */
+
+  int _databaseId;
+  int get databaseId => _databaseId;
+
+  static Future<List<ExerciseState>> queryByWorkoutId(
+      BuildContext context, Database db, final int workoutId) async {
+    List<ExerciseState> exercises = [];
+    for (Exercise e in await Exercise.queryByWorkoutId(db, workoutId)) {
+      ExerciseState exerciseState = ExerciseState(context);
+
+      // write DB data into current state
+      exerciseState._activeSetId = null;
+      exerciseState._databaseId = e.id;
+      exerciseState._exerciseId = e.exerciseId;
+      //exerciseState._exerciseName = e.exerciseName; // TODO
+
+      // load sets
+      exerciseState._sets = await SetState.queryByExerciseId(context, db, e.id);
+
+      exercises.add(exerciseState);
+    }
+    return exercises;
+  }
 
   /*
    * Modified state
@@ -76,7 +100,7 @@ class ExerciseState extends ChangeNotifier {
    */
 
   // Set list should by default contain one (the first) set
-  final List<SetState> _sets;
+  List<SetState> _sets;
 
   UnmodifiableListView<SetState> get sets =>
       UnmodifiableListView<SetState>(_sets);

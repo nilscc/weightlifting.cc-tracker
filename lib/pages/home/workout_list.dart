@@ -1,63 +1,39 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:weightlifting.cc/database/storage.dart';
 
 import 'package:weightlifting.cc/json/workout.dart';
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout.dart';
+import 'package:weightlifting.cc/state/database_state.dart';
 
 class Workouts extends ChangeNotifier {
-  final List<Tuple2<String, Workout>> workouts = [];
+  List<Tuple2<int, Workout>> workouts = [];
 
-  Future<void> load() async {
-    // make sure list is empty
-    workouts.clear();
+  static Workouts of(BuildContext context) =>
+      Provider.of<Workouts>(context, listen: false);
 
-    // search app directory for workout files
-    Directory appDir = await getApplicationDocumentsDirectory();
-
-    final lis = appDir.listSync();
-    for (FileSystemEntity path in lis) {
-      if (path is File) {
-        final File f = path;
-
-        final String base = basename(f.path);
-        print(base);
-
-        if (base.startsWith('workout_') && base.endsWith('.json')) {
-          final String content = await f.readAsString();
-          final Map x = jsonDecode(content);
-          final Workout json = Workout.fromJson(x);
-
-          workouts.add(Tuple2(f.path, json));
-        }
-      }
-    }
-
-    // sort by date (reversed)
-    workouts.sort((a, b) => b.item2.date.compareTo(a.item2.date));
+  Future<void> load(Database db) async {
+    workouts = await allWorkouts(db);
 
     // done => notify all
     notifyListeners();
   }
 
-  void delete(final String filePath) async {
-    assert(basename(filePath).startsWith('workout_'));
-    assert(basename(filePath).endsWith('.json'));
-
-    // delete file
-    File(filePath).delete();
-
-    // reload
-    load();
-  }
+//  void delete(final String filePath) async {
+//    assert(basename(filePath).startsWith('workout_'));
+//    assert(basename(filePath).endsWith('.json'));
+//
+//    // delete file
+//    File(filePath).delete();
+//
+//    // reload
+//    load();
+//  }
 }
 
 class WorkoutList extends StatelessWidget {
@@ -72,6 +48,8 @@ class WorkoutList extends StatelessWidget {
   Workouts get _state => Provider.of<Workouts>(context, listen: true);
   Workouts get _stateRO => Provider.of<Workouts>(context, listen: false);
 
+  DatabaseState get _databaseState => DatabaseState.of(context);
+
   @override
   Widget build(BuildContext context) {
     if (_state.workouts.isEmpty)
@@ -85,7 +63,7 @@ class WorkoutList extends StatelessWidget {
       );
   }
 
-  Widget _workout(final String filePath, final Workout w) {
+  Widget _workout(final int workoutId, final Workout w) {
     final List<String> exerciseNames =
         w.exercises.map((e) => _em.exercise(e.id)).toList();
 
@@ -95,21 +73,20 @@ class WorkoutList extends StatelessWidget {
     final String title = w.title != null ? ' - ${w.title}' : '';
 
     return ListTile(
-
       // load workout on tap
       onTap: () async {
         await Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => WorkoutPage(context,
-                    locked: false, workout: w, filePath: filePath)));
-        _stateRO.load();
+                    locked: false, workout: w, workoutId: workoutId)));
+        _stateRO.load(await _databaseState.database);
       },
 
       // delete workout on long press
       onLongPress: () async {
         final bool discard = await _dialogMessages.showDiscardDialog(context);
-        if (discard) _stateRO.delete(filePath);
+        //if (discard) _stateRO.delete(filePath);
       },
 
       // layout
