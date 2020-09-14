@@ -138,9 +138,11 @@ class ExerciseState extends ChangeNotifier {
     if (_sets.isEmpty) {
       _sets.add(SetState(context, 20.0, 1));
       _activeSetId = 0;
-    } else if (_activeSetId == setId)
-      _activeSetId = null;
-    else if (_activeSetId > setId) _activeSetId--;
+    } else if (_activeSetId != null) {
+      if (_activeSetId == setId)
+        _activeSetId = null;
+      else if (_activeSetId > setId) _activeSetId--;
+    }
 
     _modified = true;
 

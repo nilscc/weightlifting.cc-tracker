@@ -14,6 +14,12 @@ class _State extends State<ExerciseSelectorWidget> {
   ExerciseMessages get _exc => ExerciseMessages.of(context);
 
   int _expanded;
+  List<GlobalKey> _keys;
+
+  _State() {
+    _keys = List<GlobalKey>.generate(
+        ExerciseMessages.numCategories, (index) => GlobalKey());
+  }
 
   ExerciseState get _exerciseState => ExerciseState.of(context);
 
@@ -25,8 +31,12 @@ class _State extends State<ExerciseSelectorWidget> {
           setState(() {
             if (_expanded == idx && isExpanded)
               _expanded = null;
-            else
+            else {
               _expanded = idx;
+              // wait until expansion is completed (duration of animation)
+              Future.delayed(kThemeAnimationDuration).then((_) =>
+                  Scrollable.ensureVisible(_keys[idx].currentContext));
+            }
           });
         },
         children: _exc.categoryIds
@@ -41,15 +51,18 @@ class _State extends State<ExerciseSelectorWidget> {
       ExpansionPanel(
         canTapOnHeader: true,
         headerBuilder: (context, isExpanded) =>
-            ListTile(title: Text(_exc.category(categoryId))),
+            ListTile(key: _keys[index], title: Text(_exc.category(categoryId))),
         isExpanded: _expanded == index,
         body: Column(
-          children: _exc.categoryExercises(categoryId).map((exerciseId) => _buildExercise(exerciseId)).toList(),
+          children: _exc
+              .categoryExercises(categoryId)
+              .map((exerciseId) => _buildExercise(exerciseId))
+              .toList(),
         ),
       );
 
   Widget _buildExercise(int exerciseId) => FlatButton(
-    child: Text(_exc.exercise(exerciseId)),
-    onPressed: () => _exerciseState.exerciseId = exerciseId,
-  );
+        child: Text(_exc.exercise(exerciseId)),
+        onPressed: () => _exerciseState.exerciseId = exerciseId,
+      );
 }
