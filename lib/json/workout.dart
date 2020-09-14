@@ -20,6 +20,7 @@ class Workout {
   // Serialization methods
   factory Workout.fromJson(Map<String, dynamic> json) => _$WorkoutFromJson(json);
   Map<String, dynamic> toJson() => _$WorkoutToJson(this);
+
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -42,10 +43,11 @@ class Exercise {
 
 @JsonSerializable(explicitToJson: true)
 class Set {
-  Set(this.weightKg, this.repetitions);
+  Set(this.weightKg, this.repetitions, {this.sets: 1});
 
   final double weightKg;
   final int repetitions;
+  final int sets;
 
   double weightLbs() => weightKg * 2.20462262485;
 

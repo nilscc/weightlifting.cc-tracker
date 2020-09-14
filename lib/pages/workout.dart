@@ -7,6 +7,7 @@ import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout/exercise_list_widget.dart';
 import 'package:weightlifting.cc/pages/workout/save_button_widget.dart';
 import 'package:weightlifting.cc/pages/workout/workout_details_widget.dart';
+import 'package:weightlifting.cc/state/database_state.dart';
 import 'package:weightlifting.cc/state/modified_state.dart';
 import 'package:weightlifting.cc/state/workout_state.dart';
 
@@ -15,10 +16,13 @@ class WorkoutPage extends StatelessWidget {
 
   final bool locked;
 
-  final String filePath;
+  final int workoutId;
   final Workout workout;
 
-  WorkoutPage(this.context, {this.locked: true, this.filePath, this.workout});
+  WorkoutPage(this.context, {this.locked: true, this.workoutId, this.workout});
+
+  // states
+  DatabaseState get _db => DatabaseState.of(context);
 
   // localization
   DialogMessages get _dia => DialogMessages.of(context);
@@ -28,17 +32,25 @@ class WorkoutPage extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (_) => ModifiedState(),
         builder: (context, _) => ChangeNotifierProvider(
-          create: (_) {
-            if (filePath != null && workout != null)
-              return WorkoutState.read(context, filePath, workout);
-            else
-              return WorkoutState(context);
-          },
+          create: (context) => WorkoutState(context),
           builder: (context, _) => Scaffold(
             appBar: _appBar(context),
-            body: _body(context),
+            body: workoutId == null ? _body(context) : _futureBody(context),
           ),
         ),
+      );
+
+  Widget _futureBody(BuildContext context) => FutureBuilder(
+        future: _db.database
+            .then((db) => WorkoutState.of(context).query(db, workoutId)),
+        initialData: _bodyLoading(context),
+        builder: (context, snapshot) {
+          print(snapshot);
+          if (snapshot.connectionState == ConnectionState.done) {
+            return _body(context);
+          } else
+            return _bodyLoading(context);
+        },
       );
 
   /*
@@ -71,6 +83,12 @@ class WorkoutPage extends StatelessWidget {
     else
       return true;
   }
+
+  Widget _bodyLoading(BuildContext context) => Card(
+        child: ListTile(
+          title: Text('LOADING'),
+        ),
+      );
 
   Widget _body(BuildContext context) => WillPopScope(
         onWillPop: () => _canPop(context),

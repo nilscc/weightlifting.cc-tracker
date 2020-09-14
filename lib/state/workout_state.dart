@@ -2,23 +2,15 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weightlifting.cc/json/workout.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:weightlifting.cc/database/types.dart' as dbt;
 import 'package:weightlifting.cc/state/exercise_state.dart';
 import 'package:weightlifting.cc/state/modified_state.dart';
 
 class WorkoutState extends ChangeNotifier {
-
   final BuildContext context;
 
-  WorkoutState(this.context)
-    : _exercises = [ExerciseState(context)];
-
-  WorkoutState.read(this.context, final String filePath, final Workout workout)
-    : filePath = filePath
-    , _title = workout.title
-    , _hasTime = workout.hasTime
-    , _dateTime = workout.date
-    , _exercises = workout.exercises.map((e) => ExerciseState.read(context, e)).toList();
+  WorkoutState(this.context) : _exercises = [ExerciseState(context)];
 
   /// Get workout state of current context (provided via "ChangeNotifierProvider")
   static WorkoutState of(BuildContext context, {bool listen: false}) =>
@@ -29,7 +21,23 @@ class WorkoutState extends ChangeNotifier {
    *
    */
 
-  String filePath;
+  int _databaseId;
+  int get databaseId => _databaseId;
+
+  Future<void> query(Database db, final int workoutId) async {
+
+    // lookup database data
+    final dbt.Workout w = await dbt.Workout.query(db, workoutId);
+
+    // write DB data into current state
+    _databaseId = w.id;
+    _title = w.title;
+    _dateTime = w.date;
+    _hasTime = w.hasTime;
+
+    // load exercises
+    _exercises = await ExerciseState.queryByWorkoutId(context, db, workoutId);
+  }
 
   /*
    * Internal meta data, e.g. modified status
@@ -70,16 +78,15 @@ class WorkoutState extends ChangeNotifier {
   }
 
   // time is a virtual getter/setter without associated member (part of _dateTime)
-  TimeOfDay get time => TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
+  TimeOfDay get time =>
+      TimeOfDay(hour: _dateTime.hour, minute: _dateTime.minute);
   set time(TimeOfDay time) {
     if (this.time != time) {
       if (time != null) {
-        _dateTime = DateTime(
-            _dateTime.year, _dateTime.month, _dateTime.day, time.hour,
-            time.minute);
+        _dateTime = DateTime(_dateTime.year, _dateTime.month, _dateTime.day,
+            time.hour, time.minute);
         _hasTime = true;
-      }
-      else
+      } else
         _hasTime = false;
 
       _modified = true;
@@ -105,7 +112,7 @@ class WorkoutState extends ChangeNotifier {
    *
    */
 
-  final List<ExerciseState> _exercises;
+  List<ExerciseState> _exercises;
 
   UnmodifiableListView<ExerciseState> get exercises =>
       UnmodifiableListView(_exercises);
@@ -131,8 +138,7 @@ class WorkoutState extends ChangeNotifier {
     _activeExerciseId = idx;
 
     for (int i = 0; i < exercises.length; ++i) {
-      if (i != idx)
-        exercises[i].activeSetId = null;
+      if (i != idx) exercises[i].activeSetId = null;
     }
 
     notifyListeners();
@@ -153,8 +159,7 @@ class WorkoutState extends ChangeNotifier {
     // update active exercise selection
     if (_activeExerciseId == idx)
       _activeExerciseId = null;
-    else if (_activeExerciseId > idx)
-      _activeExerciseId--;
+    else if (_activeExerciseId > idx) _activeExerciseId--;
 
     _modified = true;
 
