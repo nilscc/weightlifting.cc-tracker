@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
    *
    */
 
-  Widget _body(BuildContext context) => Column(
+  Widget _body(BuildContext context) => ListView(
         children: <Widget>[
           _header(context),
           ChangeNotifierProvider.value(
