@@ -45,7 +45,7 @@ void main() async {
   //await deleteMainDatabase();
 
   // Set up time formatting with system locale
-  Intl.defaultLocale = window.locale.toString();
+  Intl.defaultLocale = 'de'; //window.locale.toString(); // TODO
 
   // Run main app
   runApp(MainApp());
