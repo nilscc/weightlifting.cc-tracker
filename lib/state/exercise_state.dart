@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:weightlifting.cc/database/types.dart';
+import 'package:weightlifting.cc/database/types.dart' as dbt;
 import 'package:weightlifting.cc/state/modified_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
@@ -24,10 +24,29 @@ class ExerciseState extends ChangeNotifier {
   int _databaseId;
   int get databaseId => _databaseId;
 
+  Future<void> save(Database db, final int workoutId) async {
+    final exercise = dbt.Exercise(
+      id: databaseId,
+      workoutId: workoutId,
+      exerciseId: exerciseId,
+      exerciseName: null, // TODO
+    );
+
+    if (exercise.id != null)
+      exercise.update(db);
+    else {
+      _databaseId = await exercise.insert(db);
+    }
+
+    // save all sets
+    for (final set in _sets)
+      await set.save(db, databaseId);
+  }
+
   static Future<List<ExerciseState>> queryByWorkoutId(
       BuildContext context, Database db, final int workoutId) async {
     List<ExerciseState> exercises = [];
-    for (Exercise e in await Exercise.queryByWorkoutId(db, workoutId)) {
+    for (final e in await dbt.Exercise.queryByWorkoutId(db, workoutId)) {
       ExerciseState exerciseState = ExerciseState(context);
 
       // write DB data into current state

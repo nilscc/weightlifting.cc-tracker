@@ -34,6 +34,11 @@ class Workout {
         'title': title,
       };
 
+  Future<void> delete(Database db) async {
+    assert(id != null);
+    await db.delete(_table, where: 'id = ?', whereArgs: [id]);
+  }
+
   static Future<Workout> query(Database db, final int workoutId) async {
     return (await db.query(_table,
             where: 'id = ?', whereArgs: [workoutId], limit: 1))
@@ -43,9 +48,8 @@ class Workout {
   }
 
   Future<int> insert(Database db) async {
-    final int newId = await db.insert(_table, toMap());
-    this.id = newId;
-    return newId;
+    id = await db.insert(_table, toMap());
+    return id;
   }
 
   Future<void> update(Database db) {
@@ -105,9 +109,8 @@ class Exercise {
   }
 
   Future<int> insert(Database db) async {
-    final int newId = await db.insert(_table, toMap());
-    this.id = newId;
-    return newId;
+    id = await db.insert(_table, toMap());
+    return id;
   }
 
   Future<void> update(Database db) {
@@ -169,9 +172,8 @@ class Set {
   }
 
   Future<int> insert(Database db) async {
-    final int newId = await db.insert(_table, toMap());
-    this.id = newId;
-    return newId;
+    id = await db.insert(_table, toMap());
+    return id;
   }
 
   Future<void> update(Database db) {

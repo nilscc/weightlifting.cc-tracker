@@ -24,10 +24,29 @@ class WorkoutState extends ChangeNotifier {
   int _databaseId;
   int get databaseId => _databaseId;
 
+  Future<void> save(Database db) async {
+    final workout = dbt.Workout(
+      id: databaseId,
+      title: title,
+      date: dateTime,
+      hasTime: hasTime,
+    );
+
+    if (workout.id != null)
+      await workout.update(db);
+    else {
+      _databaseId = await workout.insert(db);
+    }
+
+    // save all exercises
+    for (final e in exercises)
+      await e.save(db, databaseId);
+  }
+
   Future<void> query(Database db, final int workoutId) async {
 
     // lookup database data
-    final dbt.Workout w = await dbt.Workout.query(db, workoutId);
+    final w = await dbt.Workout.query(db, workoutId);
 
     // write DB data into current state
     _databaseId = w.id;

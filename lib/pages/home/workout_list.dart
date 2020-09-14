@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weightlifting.cc/database/storage.dart';
+import 'package:weightlifting.cc/database/types.dart' as dbt;
 
-import 'package:weightlifting.cc/json/workout.dart';
+import 'package:weightlifting.cc/json/workout.dart' as json;
 import 'package:weightlifting.cc/localization/messages.dart';
 import 'package:weightlifting.cc/pages/workout.dart';
 import 'package:weightlifting.cc/state/database_state.dart';
 
 class Workouts extends ChangeNotifier {
-  List<Tuple2<int, Workout>> workouts = [];
+  List<Tuple2<int, json.Workout>> workouts = [];
 
   static Workouts of(BuildContext context) =>
       Provider.of<Workouts>(context, listen: false);
@@ -24,16 +25,10 @@ class Workouts extends ChangeNotifier {
     notifyListeners();
   }
 
-//  void delete(final String filePath) async {
-//    assert(basename(filePath).startsWith('workout_'));
-//    assert(basename(filePath).endsWith('.json'));
-//
-//    // delete file
-//    File(filePath).delete();
-//
-//    // reload
-//    load();
-//  }
+  Future<void> delete(Database db, final int workoutId) async {
+    await dbt.Workout(id: workoutId).delete(db);
+    await load(db);
+  }
 }
 
 class WorkoutList extends StatelessWidget {
@@ -63,7 +58,7 @@ class WorkoutList extends StatelessWidget {
       );
   }
 
-  Widget _workout(final int workoutId, final Workout w) {
+  Widget _workout(final int workoutId, final json.Workout w) {
     final List<String> exerciseNames =
         w.exercises.map((e) => _em.exercise(e.id)).toList();
 
@@ -86,7 +81,8 @@ class WorkoutList extends StatelessWidget {
       // delete workout on long press
       onLongPress: () async {
         final bool discard = await _dialogMessages.showDiscardDialog(context);
-        //if (discard) _stateRO.delete(filePath);
+        if (discard)
+          await _stateRO.delete(await _databaseState.database, workoutId);
       },
 
       // layout
