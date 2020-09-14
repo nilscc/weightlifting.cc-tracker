@@ -7,16 +7,14 @@ import 'package:weightlifting.cc/state/modified_state.dart';
 import 'package:weightlifting.cc/state/set_state.dart';
 
 class ExerciseState extends ChangeNotifier {
-
   final BuildContext context;
 
-  ExerciseState(this.context)
-    : _sets = [SetState(context, 20.0, 1)];
+  ExerciseState(this.context) : _sets = [SetState(context, 20.0, 1)];
 
   ExerciseState.read(this.context, final Exercise exercise)
-    : _exerciseId = exercise.id
-    , _activeSetId = null
-    , _sets = exercise.sets.map((s) => SetState.read(context, s)).toList();
+      : _exerciseId = exercise.id,
+        _activeSetId = null,
+        _sets = exercise.sets.map((s) => SetState.read(context, s)).toList();
 
   /// Get exercise state of current context (provided via "ChangeNotifierProvider")
   static ExerciseState of(BuildContext context, {bool listen: false}) =>
@@ -116,11 +114,11 @@ class ExerciseState extends ChangeNotifier {
     if (_sets.isEmpty) {
       _sets.add(SetState(context, 20.0, 1));
       _activeSetId = 0;
+    } else if (_activeSetId != null) {
+      if (_activeSetId == setId)
+        _activeSetId = null;
+      else if (_activeSetId > setId) _activeSetId--;
     }
-    else if (_activeSetId == setId)
-      _activeSetId = null;
-    else if (_activeSetId > setId)
-      _activeSetId--;
 
     _modified = true;
 

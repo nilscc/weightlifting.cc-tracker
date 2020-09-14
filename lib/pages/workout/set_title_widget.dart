@@ -51,6 +51,9 @@ class SetTitleWidget extends StatelessWidget {
 
   void _deleteSet() async {
     final bool discard = await _dialogMessages.showDiscardDialog(context);
-    if (discard) _exercise.deleteSet(index);
+    if (discard) {
+      _exercise.deleteSet(index);
+      _workout.activeExerciseId = _workout.exercises.indexOf(_exercise);
+    }
   }
 }
