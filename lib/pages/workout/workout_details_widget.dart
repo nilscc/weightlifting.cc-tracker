@@ -46,7 +46,7 @@ class WorkoutDetailsWidget extends StatelessWidget {
                   final DateTime newDate = await showDatePicker(
                     context: context,
                     initialDate: _initialDate,
-                    firstDate: DateTime.now().subtract(Duration(days: 365)),
+                    firstDate: DateTime.now().subtract(Duration(days: 5 * 365)),
                     lastDate: DateTime.now().add(Duration(days: 365)),
                   );
                   if (newDate != null) {
