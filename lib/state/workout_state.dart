@@ -144,6 +144,8 @@ class WorkoutState extends ChangeNotifier {
 
   void addExercise() {
     _exercises.add(ExerciseState(context));
+    // set new exercise as active
+    activeExerciseId = exercises.length - 1;
     notifyListeners();
   }
 
